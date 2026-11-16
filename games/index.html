@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#101322">
+  <meta name="description" content="Three free, original browser games. Solve a fresh word and number puzzle every day, or play Snake Rush anytime.">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Droxion Play — Your daily brain break</title>
+  <style>
+    :root{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#f7f8ff;background:#0d1020;--bg:#0d1020;--panel:#171a2d;--edge:#30354f;--muted:#adb5cf;--aqua:#8cf5d2;--yellow:#f7c76d;--red:#f08e9d;color-scheme:dark}
+    *{box-sizing:border-box}
+    body{margin:0;background:radial-gradient(circle at 7% 0%,#273652 0,transparent 31%),radial-gradient(circle at 95% 9%,#25304f 0,transparent 25%),var(--bg);min-height:100vh}
+    button,input{font:inherit} button{cursor:pointer} a{color:inherit}
+    .wrap{max-width:1160px;margin:auto;padding:24px 22px 65px}
+    header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:44px;flex-wrap:wrap}
+    .brand{font-size:22px;font-weight:900;letter-spacing:-.8px;text-decoration:none;display:flex;align-items:center;gap:10px}
+    .brandmark{width:34px;height:34px;display:grid;place-items:center;border-radius:11px;background:var(--aqua);color:#12242b;font-weight:1000;box-shadow:0 7px 25px #8cf5d226}
+    .topright{display:flex;align-items:center;gap:12px;color:var(--muted);font-size:13px}
+    .pill{border:1px solid #516353;border-radius:99px;padding:8px 12px;color:var(--aqua);background:#122922}
+    h1{font-size:clamp(36px,6vw,66px);letter-spacing:-2.5px;line-height:1.02;max-width:730px;margin:9px 0 13px}
+    h1 span{color:var(--aqua)}
+    .eyebrow{color:var(--aqua);font-size:12px;text-transform:uppercase;font-weight:800;letter-spacing:2px}
+    .lead{color:var(--muted);line-height:1.65;max-width:600px;font-size:16px;margin:0}
+    .stats{margin-top:22px;display:flex;flex-wrap:wrap;gap:10px}
+    .stat{background:#ffffff08;border:1px solid #ffffff15;padding:9px 13px;border-radius:11px;font-size:13px;color:#e0e6f8}
+    .stat b{color:var(--aqua);margin-right:6px}
+    .games{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px;margin:36px 0 23px}
+    .game-tab{display:flex;align-items:center;text-align:left;gap:14px;border-radius:17px;padding:17px;border:1px solid var(--edge);background:#ffffff06;color:#e7ebfb;min-height:105px;transition:background .15s,border-color .15s}
+    .game-tab:hover{background:#ffffff10}.game-tab[aria-selected="true"]{border-color:var(--aqua);background:#14352e;box-shadow:inset 0 0 0 1px #8cf5d218}
+    .game-icon{width:53px;height:53px;flex-shrink:0;border-radius:15px;display:grid;place-items:center;font-size:25px;background:#313954}
+    .game-title{display:block;font-size:16px;font-weight:800}.game-sub{display:block;color:var(--muted);font-size:12px;line-height:1.4;margin-top:5px}
+    .arena{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(260px,.72fr);gap:20px;align-items:start}
+    .panel{background:rgba(23,26,45,.95);border:1px solid var(--edge);border-radius:22px;padding:clamp(18px,3vw,30px);box-shadow:0 24px 55px #00000015}
+    .section-title{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+    h2{margin:0;font-size:23px;letter-spacing:-.5px}
+    h3{margin:0 0 9px;font-size:15px}
+    .subtext{margin:6px 0 20px;color:var(--muted);font-size:13px;line-height:1.6}
+    .soft-badge{font-size:11px;color:var(--yellow);border:1px solid #79643d;background:#3a2f24;padding:6px 9px;border-radius:99px;font-weight:800}
+    .board{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;width:min(100%,333px);margin:18px auto}
+    .tile{aspect-ratio:1;border:2px solid #3b415c;border-radius:9px;display:grid;place-items:center;font-size:clamp(20px,4.5vw,28px);font-weight:900;text-transform:uppercase;background:#20243a;color:white}
+    .tile.filled{border-color:#79809c}.tile.exact{background:#32896d;border-color:#32896d}.tile.present{background:#a07937;border-color:#a07937}.tile.miss{background:#424961;border-color:#424961}
+    .keyboard{max-width:490px;margin:22px auto 0;display:grid;gap:6px}
+    .keyrow{display:flex;justify-content:center;gap:5px}
+    .key{flex:1;min-width:0;max-width:45px;min-height:47px;border:0;border-radius:7px;background:#404764;color:#fff;font-size:13px;font-weight:800}
+    .key.wide{max-width:66px;font-size:10px}.key.exact{background:#32896d}.key.present{background:#a07937}.key.miss{background:#292e40}
+    .status{min-height:42px;background:#232a3d;border:1px solid #38425d;border-radius:11px;display:flex;align-items:center;justify-content:center;text-align:center;padding:9px;color:#e0e7fc;font-size:13px}
+    .primary{background:var(--aqua);color:#102126;border:0;border-radius:12px;font-weight:900;padding:12px 17px}
+    .primary:hover{filter:brightness(1.07)}.secondary{background:#2d3550;color:#fff;border:1px solid #4a5677;border-radius:12px;font-weight:700;padding:11px 16px}
+    .actionrow{display:flex;gap:9px;justify-content:center;margin-top:14px;flex-wrap:wrap}
+    .side-card{padding:19px;background:#20243a;border:1px solid #333c57;border-radius:17px;margin-bottom:14px}
+    .side-card p{font-size:13px;color:var(--muted);line-height:1.7;margin:0}
+    .side-card b{color:#e9ecf7}
+    .legend{display:flex;gap:12px;flex-wrap:wrap;margin:16px 0}.legend span{display:flex;gap:6px;align-items:center;font-size:12px;color:var(--muted)}.legend i{display:inline-block;width:15px;height:15px;border-radius:4px}
+    .list{margin:12px 0 0;padding-left:18px;font-size:13px;color:var(--muted);line-height:1.8}
+    .hidden{display:none!important}
+    .code-input{display:block;width:min(100%,260px);height:58px;letter-spacing:13px;text-align:center;font-size:30px;font-weight:900;border:2px solid #54607e;background:#101629;color:#fff;border-radius:12px;margin:25px auto 12px;padding:0 10px}
+    .history{display:grid;gap:8px;margin:19px auto;max-width:350px;min-height:125px}
+    .hist-row{display:flex;justify-content:space-between;align-items:center;gap:10px;background:#252c43;border:1px solid #3c4764;border-radius:11px;padding:9px 12px}
+    .hist-digits{font-size:19px;letter-spacing:5px;font-weight:800}
+    .hist-help{font-size:11px;color:var(--muted);text-align:right}
+    canvas{display:block;width:min(100%,390px);height:auto;aspect-ratio:1;background:#11192b;border:2px solid #394661;border-radius:14px;margin:17px auto;touch-action:none}
+    .pad{display:grid;grid-template-columns:repeat(3,58px);grid-template-rows:repeat(2,46px);gap:6px;justify-content:center;margin:14px auto}
+    .pad button{background:#344361;color:#fff;border:1px solid #566482;border-radius:9px;font-size:21px}.pad .up{grid-column:2;grid-row:1}.pad .left{grid-column:1;grid-row:2}.pad .down{grid-column:2;grid-row:2}.pad .right{grid-column:3;grid-row:2}
+    .snake-info{text-align:center;font-weight:700;color:var(--muted);font-size:13px}
+    .footnote{margin-top:33px;border-top:1px solid #303650;padding-top:22px;color:#929cba;display:flex;gap:15px;flex-wrap:wrap;justify-content:space-between;font-size:12px;line-height:1.7}
+    .visually-hidden{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+    button:focus-visible,input:focus-visible{outline:3px solid var(--yellow);outline-offset:3px}
+    @media(max-width:760px){.wrap{padding:19px 14px 55px}header{margin-bottom:27px}h1{letter-spacing:-1.5px}.arena{grid-template-columns:1fr}.games{gap:8px}.game-tab{padding:11px;min-height:95px;flex-direction:column;text-align:center;gap:8px}.game-icon{width:38px;height:38px;font-size:19px;border-radius:11px}.game-title{font-size:12px}.game-sub{font-size:10px;margin-top:2px}.panel{border-radius:16px}.topright{font-size:11px}.key{min-height:42px}.keyrow{gap:3px}.keyboard{gap:5px}.stats{gap:6px}.stat{font-size:11px}}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <a class="brand" href="/" aria-label="Droxion Play home"><span class="brandmark">D</span>DROXION<span style="color:var(--aqua)">PLAY</span></a>
+    <div class="topright"><span id="todayLabel">Today's games</span><span class="pill">Free to play</span></div>
+  </header>
+  <main>
+    <div class="eyebrow">Think. Solve. Repeat.</div>
+    <h1>Your daily <span>brain break.</span></h1>
+    <p class="lead">Three original browser games. A fresh daily word puzzle, a number-code challenge, and a classic arcade break. No sign-up. No download.</p>
+    <div class="stats"><div class="stat"><b id="streak">0</b> day word streak</div><div class="stat"><b id="wins">0</b> word wins</div><div class="stat"><b id="snakeHigh">0</b> snake high score</div></div>
+    <nav class="games" role="tablist" aria-label="Choose game">
+      <button class="game-tab" role="tab" aria-selected="true" aria-controls="letterPanel" id="letterTab" data-game="letter"><span class="game-icon" aria-hidden="true">🔤</span><span><span class="game-title">Letter Five</span><span class="game-sub">Daily word challenge</span></span></button>
+      <button class="game-tab" role="tab" aria-selected="false" aria-controls="numberPanel" id="numberTab" data-game="number"><span class="game-icon" aria-hidden="true">🔢</span><span><span class="game-title">Code Four</span><span class="game-sub">Daily logic challenge</span></span></button>
+      <button class="game-tab" role="tab" aria-selected="false" aria-controls="snakePanel" id="snakeTab" data-game="snake"><span class="game-icon" aria-hidden="true">🐍</span><span><span class="game-title">Snake Rush</span><span class="game-sub">Play as long as you like</span></span></button>
+    </nav>
+    <section class="arena" id="letterPanel" role="tabpanel" aria-labelledby="letterTab">
+      <div class="panel">
+        <div class="section-title"><h2>Letter Five</h2><span class="soft-badge">NEW EVERY DAY</span></div>
+        <p class="subtext">Find the hidden five-letter word. You have six tries. Everyone gets the same word each UTC day.</p>
+        <div class="status" id="wordStatus" role="status" aria-live="polite">Type your first five-letter guess.</div>
+        <div class="board" id="wordBoard" aria-label="Word guesses"></div>
+        <div class="keyboard" id="keyboard" aria-label="Letter keyboard"></div>
+        <div class="actionrow"><button class="secondary" id="wordShare">Share results</button></div>
+      </div>
+      <aside class="panel">
+        <div class="side-card"><h3>How to play</h3><p>Guess any five-letter word, then press Enter. Tiles change colors to show how close your guess is.</p><div class="legend"><span><i style="background:#32896d"></i>Right spot</span><span><i style="background:#a07937"></i>Wrong spot</span><span><i style="background:#424961"></i>Not in word</span></div><p>A letter can appear more than once. Your progress stays on this device.</p></div>
+        <div class="side-card"><h3>Why come back?</h3><p>One fresh puzzle every day, a local win streak, and a result you can share without revealing the answer.</p></div>
+        <div class="side-card"><h3>Support the games</h3><p>Every game is free during this preview. Advertising and optional upgrades are not enabled yet.</p></div>
+      </aside>
+    </section>
+    <section class="arena hidden" id="numberPanel" role="tabpanel" aria-labelledby="numberTab">
+      <div class="panel">
+        <div class="section-title"><h2>Code Four</h2><span class="soft-badge">NEW EVERY DAY</span></div>
+        <p class="subtext">Crack a four-digit code with no repeated digits. Seven guesses. Each guess reveals exact and misplaced matches.</p>
+        <div class="status" id="codeStatus" role="status" aria-live="polite">Try four different digits.</div>
+        <label for="codeInput" class="visually-hidden">Your four-digit guess</label>
+        <input id="codeInput" class="code-input" type="text" inputmode="numeric" autocomplete="off" maxlength="4" placeholder="0000" pattern="[0-9]{4}">
+        <div class="actionrow"><button class="primary" id="codeSubmit">Check code</button><button class="secondary" id="codeShare">Share results</button></div>
+        <div class="history" id="codeHistory" aria-label="Previous code guesses"></div>
+      </div>
+      <aside class="panel"><div class="side-card"><h3>How to play</h3><p>The secret code contains four different digits, including a possible leading zero.</p><ul class="list"><li><b>Exact:</b> right digit in the right position</li><li><b>Misplaced:</b> right digit in a different position</li><li>Use the clues to solve it in seven tries</li></ul></div><div class="side-card"><h3>Shared daily challenge</h3><p>Everyone receives the same code for the day. A new one arrives at 00:00 UTC.</p></div></aside>
+    </section>
+    <section class="arena hidden" id="snakePanel" role="tabpanel" aria-labelledby="snakeTab">
+      <div class="panel">
+        <div class="section-title"><h2>Snake Rush</h2><span class="soft-badge">ENDLESS ARCADE</span></div>
+        <p class="subtext">Collect the glowing squares. Don't hit the wall or your own tail. Play using arrow keys, WASD, or the on-screen buttons.</p>
+        <div class="snake-info">Score: <span id="snakeScore">0</span> &nbsp; · &nbsp; Best: <span id="snakeBest">0</span></div>
+        <canvas id="snakeCanvas" width="400" height="400" aria-label="Snake game board, twenty by twenty cells"></canvas>
+        <div class="actionrow"><button class="primary" id="snakeStart">Start game</button><button class="secondary" id="snakePause">Pause</button></div>
+        <div class="pad" aria-label="Snake direction controls"><button class="up" data-dir="up" aria-label="Up">↑</button><button class="left" data-dir="left" aria-label="Left">←</button><button class="down" data-dir="down" aria-label="Down">↓</button><button class="right" data-dir="right" aria-label="Right">→</button></div>
+        <div class="status" id="snakeStatus" role="status" aria-live="polite">Start whenever you're ready.</div>
+      </div>
+      <aside class="panel"><div class="side-card"><h3>Beat your best</h3><p>Snake Rush is always available, not just once a day. Your best score stays saved on this device.</p></div><div class="side-card"><h3>Controls</h3><p>Arrow keys or WASD on desktop. Tap the arrow buttons on your phone. Pause if you need a break.</p></div></aside>
+    </section>
+  </main>
+  <footer class="footnote"><span>© <span id="year"></span> Droxion Play · Original browser games.</span><span>No account, tracking, ads, or payments in this preview. Scores are saved only in your browser. New daily puzzles reset at 00:00 UTC.</span></footer>
+</div>
+<script>
+(function(){
+  "use strict";
+  const $=id=>document.getElementById(id);
+  const DAY=new Date().toISOString().slice(0,10);
+  const dateNumber=Number(DAY.replaceAll("-",""));
+  $("todayLabel").textContent=new Date().toLocaleDateString(undefined,{month:"short",day:"numeric",year:"numeric",timeZone:"UTC"})+" · UTC";
+  $("year").textContent=String(new Date().getFullYear());
+  const read=(k,fb)=>{try{const raw=localStorage.getItem(k);return raw?JSON.parse(raw):fb}catch(e){return fb}};
+  const save=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}};
+  const notify=(id,msg)=>{$(id).textContent=msg};
+  function share(msg,id){if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(msg).then(()=>notify(id,"Results copied! Share with a friend.")).catch(()=>fallbackCopy(msg,id));}else fallbackCopy(msg,id)}
+  function fallbackCopy(msg,id){const t=document.createElement("textarea");t.value=msg;t.style.position="fixed";t.style.opacity="0";document.body.append(t);t.select();let ok=false;try{ok=document.execCommand("copy")}catch(e){}t.remove();notify(id,ok?"Results copied!":"Copy this result: "+msg.replace(/\n/g," "))}
+  function seed(x){let n=x|0;return ()=>{n=(Math.imul(n,1664525)+1013904223)|0;return (n>>>0)/4294967296}}
+  function dayIndex(salt,size){return Math.floor(seed(dateNumber+salt)()*size)}
+  const WORDS=("APPLE GRAPE PEACH LEMON BERRY MANGO MELON PLANT STONE CLOUD RIVER OCEAN BEACH LIGHT DREAM HEART MUSIC SMILE LAUGH BRAVE SHINE WATER EARTH STARS NIGHT HOUSE BREAD CHAIR TABLE TRAIN TRACK GREEN BLUE? WHITE BLACK BROWN SWEET SUGAR HONEY PEARL FLAME BRICK GLASS PAPER BOOKS CLOCK HAPPY SMALL LARGE QUIET SMART FRESH CLEAR ROUND STORY WHEAT FLOUR PIZZA PASTA RANCH SHEEP HORSE MOUSE TIGER EAGLE ROBIN SPARK MAGIC BONUS SOLAR SPACE ORBIT COMET WORLD UNITY PEACE HUMAN VIVID FOCUS BRAIN THINK LOGIC SKILL SCORE LEVEL GAME? PIXEL POWER SPEED QUICK CHESS QUEEN KING? ROYAL PARTY SHARE TRUST SOUND VOICE RADIO VIDEO DANCE ACTOR MOVIE STAGE POINT CLOSE OPEN? ENTRY FIRST FINAL EARLY DAILY AGAIN BRING CARRY DRIVE ROADS CYCLE TRAIL MAPLE CEDAR BLOOM FIELD SUNNY WINDY RAINY SNOWY CHILL WARM? FROST CRISP JUICE FRUIT CLEAN FANCY HOTEL MONEY PRICE VALUE COINS SPEND SAVER BUILD WRITE READ? LEARN TEACH STUDY CLASS CRAFT ART? COLOR PAINT SHAPE LINES ANGLE EQUAL COUNT NUMBER").split(" ").filter(w=>/^[A-Z]{5}$/.test(w));
+  const answer=WORDS[dayIndex(163,WORDS.length)];
+  const wk="droxion-word-v1-"+DAY;
+  const word=read(wk,{guesses:[],done:false,won:false});
+  if(!Array.isArray(word.guesses))word.guesses=[];
+  let partial="";
+  let active="letter";
+  function evaluate(guess,target){
+    const result=Array(5).fill("miss"),remain={};
+    for(let i=0;i<5;i++){if(guess[i]===target[i])result[i]="exact";else remain[target[i]]=(remain[target[i]]||0)+1}
+    for(let i=0;i<5;i++){if(result[i]==="exact")continue;const ch=guess[i];if(remain[ch]>0){result[i]="present";remain[ch]--}}
+    return result;
+  }
+  function displayWord(){
+    const board=$("wordBoard");board.replaceChildren();
+    for(let row=0;row<6;row++)for(let col=0;col<5;col++){
+      const cell=document.createElement("div");cell.className="tile";const item=word.guesses[row];
+      let letter="";
+      if(item){letter=item.word[col];cell.classList.add(item.marks[col])}
+      else if(row===word.guesses.length&&!word.done){letter=partial[col]||"";if(letter)cell.classList.add("filled")}
+      cell.textContent=letter;cell.setAttribute("aria-label","Row "+(row+1)+" column "+(col+1)+": "+(letter||"empty"));
+      board.append(cell);
+    }
+    const ranks={miss:1,present:2,exact:3},keys={};
+    word.guesses.forEach(g=>g.word.split("").forEach((letter,i)=>{const state=g.marks[i];if(!keys[letter]||ranks[state]>ranks[keys[letter]])keys[letter]=state}));
+    const kb=$("keyboard");kb.replaceChildren();
+    ["QWERTYUIOP","ASDFGHJKL","ENTER|ZXCVBNM|BACK"].forEach(line=>{
+      const row=document.createElement("div");row.className="keyrow";
+      (line.includes("|")?["ENTER",..."ZXCVBNM","BACK"]:[...line]).forEach(k=>{
+        const b=document.createElement("button");b.type="button";b.className="key"+(k.length>1?" wide":"")+(keys[k]?" "+keys[k]:"");b.textContent=k==="BACK"?"⌫":k;b.setAttribute("aria-label",k==="BACK"?"Backspace":k==="ENTER"?"Submit guess":k);b.addEventListener("click",()=>wordKey(k));row.append(b)
+      });kb.append(row)
+    });
+    if(word.done)notify("wordStatus",word.won?"Great work! Solved in "+word.guesses.length+" of 6 tries.": "Today's puzzle is complete. The word was "+answer+".");
+    else notify("wordStatus","Guess "+(word.guesses.length+1)+" of 6 · "+(partial.length?partial.length+"/5 letters":"Enter a five-letter word."));
+  }
+  function wordKey(k){
+    if(active!=="letter"||word.done)return;
+    if(k==="BACK")partial=partial.slice(0,-1);
+    else if(k==="ENTER"){
+      if(partial.length!==5){notify("wordStatus","Type five letters, then press Enter.");return}
+      const guess=partial;const marks=evaluate(guess,answer);word.guesses.push({word:guess,marks});
+      if(guess===answer){word.done=true;word.won=true;const days=read("droxion-win-days-v1",[]);if(!days.includes(DAY)){days.push(DAY);save("droxion-win-days-v1",days)}}
+      else if(word.guesses.length>=6){word.done=true;word.won=false}
+      partial="";save(wk,word);updateStats()
+    }else if(/^[A-Z]$/.test(k)&&partial.length<5)partial+=k;
+    displayWord()
+  }
+  function updateStats(){
+    const days=read("droxion-win-days-v1",[]).filter(x=>/^\d{4}-\d{2}-\d{2}$/.test(x));
+    $("wins").textContent=String(days.length);
+    const set=new Set(days);let n=0,d=new Date(DAY+"T00:00:00Z");
+    if(!set.has(DAY))d.setUTCDate(d.getUTCDate()-1);
+    while(set.has(d.toISOString().slice(0,10))){n++;d.setUTCDate(d.getUTCDate()-1)}
+    $("streak").textContent=String(n);
+  }
+  $("wordShare").addEventListener("click",()=>{
+    if(!word.guesses.length){notify("wordStatus","Make a guess before sharing.");return}
+    const score=word.won?word.guesses.length+"/6":word.done?"X/6":"in progress";
+    const grid=word.guesses.map(g=>g.marks.map(m=>m==="exact"?"🟩":m==="present"?"🟨":"⬛").join("")).join("\n");
+    share("Droxion Play · Letter Five · "+DAY+"\n"+score+"\n"+grid+"\n"+location.origin,"wordStatus");
+  });
+  const ck="droxion-code-v1-"+DAY,code=read(ck,{guesses:[],done:false,won:false});
+  if(!Array.isArray(code.guesses))code.guesses=[];
+  const rand=seed(dateNumber+975),digits="0123456789".split("");
+  for(let i=digits.length-1;i>0;i--){const j=Math.floor(rand()*(i+1));[digits[i],digits[j]]=[digits[j],digits[i]]}
+  const secret=digits.slice(0,4).join("");
+  function displayCode(){
+    const history=$("codeHistory");history.replaceChildren();
+    code.guesses.forEach(g=>{
+      const row=document.createElement("div");row.className="hist-row";
+      const digits=document.createElement("span");digits.className="hist-digits";digits.textContent=g.value;
+      const help=document.createElement("span");help.className="hist-help";help.textContent=g.exact+" exact · "+g.misplaced+" misplaced";row.append(digits,help);history.append(row);
+    });
+    if(!code.guesses.length){const msg=document.createElement("p");msg.className="subtext";msg.textContent="Your clues will appear here.";history.append(msg)}
+    $("codeInput").disabled=code.done;$("codeSubmit").disabled=code.done;
+    if(code.done)notify("codeStatus",code.won?"Code cracked in "+code.guesses.length+" guesses!":"Out of guesses. Today's code was "+secret+".");
+    else notify("codeStatus","Guess "+(code.guesses.length+1)+" of 7. Every digit must be different.");
+  }
+  function submitCode(){
+    if(code.done)return;
+    const value=$("codeInput").value.trim();
+    if(!/^\d{4}$/.test(value)||new Set(value).size!==4){notify("codeStatus","Enter exactly four different digits.");return}
+    let exact=0,misplaced=0;for(let i=0;i<4;i++){if(value[i]===secret[i])exact++;else if(secret.includes(value[i]))misplaced++}
+    code.guesses.push({value,exact,misplaced});
+    if(value===secret){code.done=true;code.won=true}else if(code.guesses.length>=7){code.done=true}
+    save(ck,code);$("codeInput").value="";displayCode()
+  }
+  $("codeInput").addEventListener("input",e=>e.target.value=e.target.value.replace(/\D/g,"").slice(0,4));
+  $("codeInput").addEventListener("keydown",e=>{if(e.key==="Enter")submitCode()});
+  $("codeSubmit").addEventListener("click",submitCode);
+  $("codeShare").addEventListener("click",()=>{
+    if(!code.guesses.length){notify("codeStatus","Make a guess before sharing.");return}
+    const score=code.won?code.guesses.length+"/7":code.done?"X/7":"in progress";
+    share("Droxion Play · Code Four · "+DAY+"\n"+score+"\n"+code.guesses.map(g=>"●".repeat(g.exact)+"○".repeat(g.misplaced)+" "+g.value.length+" digits").join("\n")+"\n"+location.origin,"codeStatus");
+  });
+  const canvas=$("snakeCanvas"),ctx=canvas.getContext("2d"),N=20,UNIT=20;
+  let snake=[],food={x:13,y:10},direction={x:1,y:0},nextDirection={x:1,y:0},snakeScore=0,timer=null,playing=false,paused=false;
+  function makeFood(){const empty=[];for(let y=0;y<N;y++)for(let x=0;x<N;x++)if(!snake.some(s=>s.x===x&&s.y===y))empty.push({x,y});return empty.length?empty[Math.floor(Math.random()*empty.length)]:null}
+  function drawSnake(){
+    ctx.clearRect(0,0,400,400);ctx.fillStyle="#101a2b";ctx.fillRect(0,0,400,400);
+    ctx.strokeStyle="#1c2a3f";ctx.lineWidth=1;for(let i=0;i<=N;i++){ctx.beginPath();ctx.moveTo(i*UNIT,0);ctx.lineTo(i*UNIT,400);ctx.stroke();ctx.beginPath();ctx.moveTo(0,i*UNIT);ctx.lineTo(400,i*UNIT);ctx.stroke()}
+    ctx.fillStyle="#f7c76d";ctx.beginPath();ctx.roundRect(food.x*UNIT+3,food.y*UNIT+3,14,14,4);ctx.fill();
+    snake.forEach((s,i)=>{ctx.fillStyle=i===0?"#c1ffe2":"#60cda6";ctx.beginPath();ctx.roundRect(s.x*UNIT+2,s.y*UNIT+2,16,16,5);ctx.fill()});
+  }
+  function stopSnake(message){clearInterval(timer);timer=null;playing=false;paused=false;if(message)notify("snakeStatus",message);$("snakePause").textContent="Pause"}
+  function resetSnake(){snake=[{x:7,y:10},{x:6,y:10},{x:5,y:10}];direction={x:1,y:0};nextDirection={x:1,y:0};food=makeFood();snakeScore=0;$("snakeScore").textContent="0";drawSnake()}
+  function stepSnake(){
+    direction=nextDirection;const head={x:snake[0].x+direction.x,y:snake[0].y+direction.y};
+    const eats=head.x===food.x&&head.y===food.y;
+    const body=eats?snake:snake.slice(0,-1);
+    if(head.x<0||head.x>=N||head.y<0||head.y>=N||body.some(s=>s.x===head.x&&s.y===head.y)){stopSnake("Game over! Score: "+snakeScore+". Try again.");return}
+    snake.unshift(head);if(eats){snakeScore+=10;$("snakeScore").textContent=String(snakeScore);const best=read("droxion-snake-best-v1",0);if(snakeScore>best){save("droxion-snake-best-v1",snakeScore);updateSnakeBest()}const newFood=makeFood();if(!newFood){stopSnake("Perfect board! You win.");return}food=newFood}else snake.pop();
+    drawSnake()
+  }
+  function startSnake(){stopSnake();resetSnake();playing=true;timer=setInterval(stepSnake,145);notify("snakeStatus","Go! Collect squares and avoid collisions.");$("snakeStart").textContent="Restart game"}
+  function togglePause(){if(!playing)return;if(paused){timer=setInterval(stepSnake,145);paused=false;$("snakePause").textContent="Pause";notify("snakeStatus","Game resumed.")}else{clearInterval(timer);timer=null;paused=true;$("snakePause").textContent="Resume";notify("snakeStatus","Paused.")}}
+  function setDirection(s){const map={up:{x:0,y:-1},down:{x:0,y:1},left:{x:-1,y:0},right:{x:1,y:0}},d=map[s];if(d&&!(d.x===-direction.x&&d.y===-direction.y))nextDirection=d}
+  function updateSnakeBest(){const high=read("droxion-snake-best-v1",0);$("snakeHigh").textContent=String(high);$("snakeBest").textContent=String(high)}
+  $("snakeStart").addEventListener("click",startSnake);$("snakePause").addEventListener("click",togglePause);
+  document.querySelectorAll("[data-dir]").forEach(b=>b.addEventListener("click",()=>setDirection(b.dataset.dir)));
+  const panels={letter:"letterPanel",number:"numberPanel",snake:"snakePanel"};
+  document.querySelectorAll("[data-game]").forEach(b=>b.addEventListener("click",()=>{
+    active=b.dataset.game;
+    document.querySelectorAll("[data-game]").forEach(t=>t.setAttribute("aria-selected",String(t.dataset.game===active)));
+    Object.keys(panels).forEach(g=>$(panels[g]).classList.toggle("hidden",g!==active));
+    if(active!=="snake"&&playing&&!paused)togglePause();
+  }));
+  document.addEventListener("keydown",e=>{
+    if(e.ctrlKey||e.metaKey||e.altKey)return;
+    if(active==="snake"){const dir={ArrowUp:"up",ArrowDown:"down",ArrowLeft:"left",ArrowRight:"right",w:"up",s:"down",a:"left",d:"right"}[e.key];if(dir){e.preventDefault();setDirection(dir)}return}
+    if(active!=="letter"||["INPUT","TEXTAREA"].includes(document.activeElement.tagName))return;
+    if(e.key==="Enter"||e.key==="Backspace"){e.preventDefault();wordKey(e.key==="Enter"?"ENTER":"BACK")}
+    else if(/^[a-z]$/i.test(e.key)){wordKey(e.key.toUpperCase())}
+  });
+  document.addEventListener("visibilitychange",()=>{if(document.hidden&&playing&&!paused)togglePause()});
+  updateStats();updateSnakeBest();displayWord();displayCode();resetSnake();
+})();
+</script>
+</body>
+</html>
