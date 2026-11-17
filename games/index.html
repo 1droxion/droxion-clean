@@ -6,6 +6,14 @@
 <meta name="theme-color" content="#fafaf8">
 <meta name="description" content="FIVE by Droxion is a free daily five-letter word puzzle. Guess the word in six tries, practice freely, and track your streaks.">
 <meta name="robots" content="noindex,nofollow">
+<link rel="canonical" href="https://games.droxion.com/">
+<link rel="icon" href="./favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="./manifest.webmanifest">
+<meta property="og:type" content="website">
+<meta property="og:title" content="FIVE by Droxion — One fresh word every day">
+<meta property="og:description" content="Play a free five-letter daily word puzzle. Six tries, unlimited practice, streaks and shareable results.">
+<meta name="twitter:card" content="summary">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"FIVE by Droxion","description":"An original free five-letter daily word game with unlimited practice.","applicationCategory":"GameApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"url":"https://games.droxion.com/"}</script>
 <title>FIVE by Droxion — A fresh puzzle every day</title>
 <style>
 :root{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;--bg:#fafaf8;--surface:#fff;--text:#242820;--muted:#747d75;--border:#e1e5df;--key:#dce1d9;--green:#568b59;--yellow:#b7a047;--gray:#7e8981;--accent:#255b40;--soft:#eff4ed;color-scheme:light}
@@ -43,7 +51,7 @@ footer{max-width:930px;border-top:1px solid var(--border);padding:17px 10px 0;te
 <main><section class="hero"><div class="eyebrow">A little victory, every day</div><h1>Five letters.<br>One little victory.</h1><p>Find the hidden word in six tries. One daily challenge, unlimited practice and your own winning streak.</p><div class="modes" role="group" aria-label="Game mode"><button class="active" id="daily" aria-pressed="true">☀ Daily puzzle</button><button id="practice" aria-pressed="false">∞ Practice</button></div></section>
 <div class="layout"><section class="game" aria-label="Word guessing game"><div class="gamehead"><strong id="gameTitle">Today's puzzle</strong><span class="badge" id="gameBadge">DAILY</span></div><div class="progress" id="progress"></div><div id="status" role="status" aria-live="polite">Guess the word</div><div class="board" id="board" role="group" aria-label="Six guesses of five letters"></div><div class="keyboard" id="keyboard" aria-label="Letter keyboard"></div><div class="actions"><button class="btn" id="hint">💡 Hint</button><button class="btn primary" id="share" hidden>Share your result</button><button class="btn" id="again" hidden>New practice word ↻</button></div></section>
 <aside class="side"><div class="sidecard"><h2>Your progress</h2><div class="statline"><span>Current streak</span><b id="streak">0 🔥</b></div><div class="statline"><span>Daily wins</span><b id="wins">0</b></div><div class="statline"><span>Win rate</span><b id="rate">0%</b></div><p>Stats stay on your device. No account necessary.</p></div><div class="sidecard"><h2>A new word tomorrow.</h2><div class="countdown" id="countdown">--:--:--</div><p>The daily game refreshes at midnight UTC.</p></div><div class="sidecard"><h2>How the colors work</h2><p>🟩 Right letter, right place.<br>🟨 Right letter, wrong place.<br>⬜ Not in the word.<br><br>You can reveal one letter after three guesses.</p></div></aside></div>
-<footer>FIVE by Droxion · An original five-letter word game. Free preview with no ads or checkout.<br>Daily puzzles use UTC dates. Game progress is saved in this browser only. Guesses use an open-source MIT-licensed dictionary.</footer></main>
+<footer>FIVE by Droxion · An original five-letter word game. Free preview with no ads or checkout.<br>Daily puzzles use UTC dates. Game progress stays in this browser. <a href="./privacy.html">Privacy</a> · <a href="./WORDLIST-LICENSE.txt">Word list license</a>.</footer></main>
 <div class="toast" id="toast" role="status" aria-live="assertive" hidden></div>
 <div class="overlay" id="overlay" hidden><div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="modalhead"><h2 id="modalTitle">How to play</h2><button class="iconbtn" id="close" aria-label="Close">×</button></div><div id="modalBody"></div></div></div>
 <script>
