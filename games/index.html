@@ -1,505 +1,161 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="theme-color" content="#f8f8f6">
-  <meta name="description" content="Six free, original browser games. Play a fresh daily word puzzle, group words, solve Sudoku, match pairs, or play Snake.">
-  <meta name="robots" content="noindex,nofollow">
-  <title>Droxion Play — Daily Words, Puzzles & More</title>
-  <style>
-    :root{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#f7f8ff;background:#0d1020;--bg:#0d1020;--panel:#171a2d;--edge:#30354f;--muted:#adb5cf;--aqua:#8cf5d2;--yellow:#f7c76d;--red:#f08e9d;color-scheme:dark}
-    *{box-sizing:border-box}
-    body{margin:0;background:radial-gradient(circle at 7% 0%,#273652 0,transparent 31%),radial-gradient(circle at 95% 9%,#25304f 0,transparent 25%),var(--bg);min-height:100vh}
-    button,input{font:inherit} button{cursor:pointer} a{color:inherit}
-    .wrap{max-width:1160px;margin:auto;padding:24px 22px 65px}
-    header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:44px;flex-wrap:wrap}
-    .brand{font-size:22px;font-weight:900;letter-spacing:-.8px;text-decoration:none;display:flex;align-items:center;gap:10px}
-    .brandmark{width:34px;height:34px;display:grid;place-items:center;border-radius:11px;background:var(--aqua);color:#12242b;font-weight:1000;box-shadow:0 7px 25px #8cf5d226}
-    .topright{display:flex;align-items:center;gap:12px;color:var(--muted);font-size:13px}
-    .pill{border:1px solid #516353;border-radius:99px;padding:8px 12px;color:var(--aqua);background:#122922}
-    h1{font-size:clamp(36px,6vw,66px);letter-spacing:-2.5px;line-height:1.02;max-width:730px;margin:9px 0 13px}
-    h1 span{color:var(--aqua)}
-    .eyebrow{color:var(--aqua);font-size:12px;text-transform:uppercase;font-weight:800;letter-spacing:2px}
-    .lead{color:var(--muted);line-height:1.65;max-width:600px;font-size:16px;margin:0}
-    .stats{margin-top:22px;display:flex;flex-wrap:wrap;gap:10px}
-    .stat{background:#ffffff08;border:1px solid #ffffff15;padding:9px 13px;border-radius:11px;font-size:13px;color:#e0e6f8}
-    .stat b{color:var(--aqua);margin-right:6px}
-    .games{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px;margin:36px 0 23px}
-    .game-tab{display:flex;align-items:center;text-align:left;gap:14px;border-radius:17px;padding:17px;border:1px solid var(--edge);background:#ffffff06;color:#e7ebfb;min-height:105px;transition:background .15s,border-color .15s}
-    .game-tab:hover{background:#ffffff10}.game-tab[aria-selected="true"]{border-color:var(--aqua);background:#14352e;box-shadow:inset 0 0 0 1px #8cf5d218}
-    .game-icon{width:53px;height:53px;flex-shrink:0;border-radius:15px;display:grid;place-items:center;font-size:25px;background:#313954}
-    .game-title{display:block;font-size:16px;font-weight:800}.game-sub{display:block;color:var(--muted);font-size:12px;line-height:1.4;margin-top:5px}
-    .arena{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(260px,.72fr);gap:20px;align-items:start}
-    .panel{background:rgba(23,26,45,.95);border:1px solid var(--edge);border-radius:22px;padding:clamp(18px,3vw,30px);box-shadow:0 24px 55px #00000015}
-    .section-title{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
-    h2{margin:0;font-size:23px;letter-spacing:-.5px}
-    h3{margin:0 0 9px;font-size:15px}
-    .subtext{margin:6px 0 20px;color:var(--muted);font-size:13px;line-height:1.6}
-    .soft-badge{font-size:11px;color:var(--yellow);border:1px solid #79643d;background:#3a2f24;padding:6px 9px;border-radius:99px;font-weight:800}
-    .board{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;width:min(100%,333px);margin:18px auto}
-    .tile{aspect-ratio:1;border:2px solid #3b415c;border-radius:9px;display:grid;place-items:center;font-size:clamp(20px,4.5vw,28px);font-weight:900;text-transform:uppercase;background:#20243a;color:white}
-    .tile.filled{border-color:#79809c}.tile.exact{background:#32896d;border-color:#32896d}.tile.present{background:#a07937;border-color:#a07937}.tile.miss{background:#424961;border-color:#424961}
-    .keyboard{max-width:490px;margin:22px auto 0;display:grid;gap:6px}
-    .keyrow{display:flex;justify-content:center;gap:5px}
-    .key{flex:1;min-width:0;max-width:45px;min-height:47px;border:0;border-radius:7px;background:#404764;color:#fff;font-size:13px;font-weight:800}
-    .key.wide{max-width:66px;font-size:10px}.key.exact{background:#32896d}.key.present{background:#a07937}.key.miss{background:#292e40}
-    .status{min-height:42px;background:#232a3d;border:1px solid #38425d;border-radius:11px;display:flex;align-items:center;justify-content:center;text-align:center;padding:9px;color:#e0e7fc;font-size:13px}
-    .primary{background:var(--aqua);color:#102126;border:0;border-radius:12px;font-weight:900;padding:12px 17px}
-    .primary:hover{filter:brightness(1.07)}.secondary{background:#2d3550;color:#fff;border:1px solid #4a5677;border-radius:12px;font-weight:700;padding:11px 16px}
-    .actionrow{display:flex;gap:9px;justify-content:center;margin-top:14px;flex-wrap:wrap}
-    .side-card{padding:19px;background:#20243a;border:1px solid #333c57;border-radius:17px;margin-bottom:14px}
-    .side-card p{font-size:13px;color:var(--muted);line-height:1.7;margin:0}
-    .side-card b{color:#e9ecf7}
-    .legend{display:flex;gap:12px;flex-wrap:wrap;margin:16px 0}.legend span{display:flex;gap:6px;align-items:center;font-size:12px;color:var(--muted)}.legend i{display:inline-block;width:15px;height:15px;border-radius:4px}
-    .list{margin:12px 0 0;padding-left:18px;font-size:13px;color:var(--muted);line-height:1.8}
-    .hidden{display:none!important}
-    .code-input{display:block;width:min(100%,260px);height:58px;letter-spacing:13px;text-align:center;font-size:30px;font-weight:900;border:2px solid #54607e;background:#101629;color:#fff;border-radius:12px;margin:25px auto 12px;padding:0 10px}
-    .history{display:grid;gap:8px;margin:19px auto;max-width:350px;min-height:125px}
-    .hist-row{display:flex;justify-content:space-between;align-items:center;gap:10px;background:#252c43;border:1px solid #3c4764;border-radius:11px;padding:9px 12px}
-    .hist-digits{font-size:19px;letter-spacing:5px;font-weight:800}
-    .hist-help{font-size:11px;color:var(--muted);text-align:right}
-    canvas{display:block;width:min(100%,390px);height:auto;aspect-ratio:1;background:#11192b;border:2px solid #394661;border-radius:14px;margin:17px auto;touch-action:none}
-    .pad{display:grid;grid-template-columns:repeat(3,58px);grid-template-rows:repeat(2,46px);gap:6px;justify-content:center;margin:14px auto}
-    .pad button{background:#344361;color:#fff;border:1px solid #566482;border-radius:9px;font-size:21px}.pad .up{grid-column:2;grid-row:1}.pad .left{grid-column:1;grid-row:2}.pad .down{grid-column:2;grid-row:2}.pad .right{grid-column:3;grid-row:2}
-    .snake-info{text-align:center;font-weight:700;color:var(--muted);font-size:13px}
-    .footnote{margin-top:33px;border-top:1px solid #303650;padding-top:22px;color:#929cba;display:flex;gap:15px;flex-wrap:wrap;justify-content:space-between;font-size:12px;line-height:1.7}
-    .visually-hidden{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
-    button:focus-visible,input:focus-visible{outline:3px solid var(--yellow);outline-offset:3px}
-    @media(max-width:760px){.wrap{padding:19px 14px 55px}header{margin-bottom:27px}h1{letter-spacing:-1.5px}.arena{grid-template-columns:1fr}.games{gap:8px}.game-tab{padding:11px;min-height:95px;flex-direction:column;text-align:center;gap:8px}.game-icon{width:38px;height:38px;font-size:19px;border-radius:11px}.game-title{font-size:12px}.game-sub{font-size:10px;margin-top:2px}.panel{border-radius:16px}.topright{font-size:11px}.key{min-height:42px}.keyrow{gap:3px}.keyboard{gap:5px}.stats{gap:6px}.stat{font-size:11px}}
-  
-    /* V2: bright, editorial puzzle design inspired by the simplicity of daily word games */
-    :root{--bg:#f8f8f6;--panel:#fff;--edge:#deded9;--muted:#66696a;--aqua:#538d4e;--yellow:#b59f3b;--red:#c54d54;color:#202124;background:#f8f8f6;color-scheme:light}
-    body{background:#f8f8f6;color:#202124}
-    .wrap{max-width:1090px}
-    header{margin-bottom:39px;padding:0 0 18px;border-bottom:1px solid #deded8}
-    .brand{font-family:Georgia,"Times New Roman",serif;font-size:26px;letter-spacing:-1.25px;color:#202124}
-    .brandmark{background:#538d4e;color:#fff;box-shadow:none;border-radius:9px;font-family:system-ui}
-    .brand span[style]{color:#538d4e!important}
-    .topright{color:#676767}
-    .pill{background:#ecf4e9;color:#367233;border-color:#bad7b5;font-weight:750}
-    .eyebrow{color:#688365;letter-spacing:2px}
-    h1{font-family:Georgia,"Times New Roman",serif;font-size:clamp(34px,5.3vw,58px);letter-spacing:-1.8px;line-height:1.13;margin:10px 0 14px}
-    h1 span{color:#538d4e}
-    .lead{color:#626668;font-size:15px}
-    .stats{margin-top:20px}.stat{background:#fff;border:1px solid #e0e0dc;color:#626568}.stat b{color:#457d43}
-    .games{grid-template-columns:repeat(3,minmax(0,1fr));gap:11px;margin-top:28px}
-    .game-tab{background:#fff;color:#242526;border-color:#e1e1dd;border-radius:13px;min-height:86px;padding:13px;box-shadow:0 2px 5px #11111104}
-    .game-tab:hover{background:#fafbf8;border-color:#9bb899}
-    .game-tab[aria-selected=true]{background:#eef6ec;color:#27562c;border-color:#538d4e;box-shadow:inset 0 0 0 1px #538d4e}
-    .game-icon{background:#f0f1ef;border-radius:10px;width:46px;height:46px;font-size:23px}
-    .game-tab[aria-selected=true] .game-icon{background:#dbebd6}
-    .game-title{font-size:14px}.game-sub{color:#787c80}
-    .panel{background:#fff;border-color:#e2e2de;border-radius:16px;box-shadow:none}
-    h2{font-family:Georgia,"Times New Roman",serif;color:#242524}
-    h3{color:#242524}.subtext{color:#686c6e}
-    .soft-badge{color:#507b42;background:#edf5e9;border:1px solid #d2e6ce}
-    .status{background:#f7f7f4;border:1px solid #e0e1db;color:#424543}
-    .tile{border:2px solid #d3d6da;border-radius:0;color:#202124;background:#fff}
-    .tile.filled{border-color:#808588}
-    .tile.exact{background:#538d4e;border-color:#538d4e;color:#fff}
-    .tile.present{background:#b59f3b;border-color:#b59f3b;color:#fff}
-    .tile.miss{background:#787c7e;border-color:#787c7e;color:#fff}
-    .keyboard{max-width:500px}.key{background:#d3d6da;color:#202124;border-radius:4px;min-height:50px}
-    .key.exact{background:#538d4e;color:#fff}.key.present{background:#b59f3b;color:#fff}.key.miss{background:#787c7e;color:#fff}
-    .side-card{background:#f8f8f6;border:1px solid #e7e7e2}
-    .side-card p,.side-card .list{color:#626568}.side-card b{color:#333}
-    .legend span{color:#626568}
-    .primary{background:#538d4e;color:#fff}
-    .secondary{background:#fff;color:#353a35;border:1px solid #cdd0c8}
-    .code-input{background:#fff;border-color:#a5aba5;color:#202124}
-    .hist-row{background:#f8f8f6;border-color:#e0e0da}.hist-help{color:#686c6e}
-    .snake-info{color:#656a65}
-    .pad button{background:#f4f5f0;color:#343a35;border-color:#d0d4cc}
-    .footnote{border-color:#dadbd5;color:#777c78}
-    .group-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin:22px 0}
-    .group-tile{min-height:77px;background:#f1f1ed;border:2px solid transparent;border-radius:10px;font-size:clamp(11px,1.5vw,14px);font-weight:850;letter-spacing:.2px;color:#222;padding:7px;word-break:break-word}
-    .group-tile.selected{background:#dfecd9;border-color:#538d4e}.group-tile:disabled{opacity:.48;cursor:default}
-    .solved-group{padding:14px;margin:9px 0;background:#e2efdf;border:1px solid #a9cba6;border-radius:11px;text-align:center}
-    .solved-group strong{display:block;font-weight:850;color:#2f6331;margin-bottom:4px}
-    .solved-group span{font-size:12px;color:#4e6b4e}
-    .attempts{color:#757b76;font-size:12px;text-align:center}
-    .sudoku-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));width:min(100%,330px);margin:22px auto;border:3px solid #353535;background:#333}
-    .sudoku-cell{aspect-ratio:1;min-width:0;min-height:0;border:1px solid #b8bab8;border-radius:0;background:#fff;color:#222;text-align:center;font-size:clamp(24px,5vw,33px);font-weight:700}
-    .sudoku-cell:nth-child(2),.sudoku-cell:nth-child(6),.sudoku-cell:nth-child(10),.sudoku-cell:nth-child(14){border-right:3px solid #333}
-    .sudoku-cell:nth-child(n+5):nth-child(-n+8){border-bottom:3px solid #333}
-    .sudoku-cell.fixed{background:#e9ede6;color:#465147}
-    .sudoku-cell.wrong{background:#ffe2e1;color:#a12b30}
-    .memory-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;width:min(100%,370px);margin:25px auto}
-    .memory-tile{aspect-ratio:1;border:1px solid #cfd8ce;border-radius:11px;background:#e8f0e4;color:#538d4e;font-size:clamp(27px,6vw,41px);font-weight:900;transition:transform .16s,background .16s}
-    .memory-tile.revealed{background:#fff;border-color:#9fb69c;transform:scale(.98)}.memory-tile.matched{background:#e3f1df;border-color:#81b17c}
-    .memory-stats{text-align:center;color:#606761;font-size:14px;font-weight:700}
-    .badge-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
-    @media(max-width:760px){header{margin-bottom:25px}.games{grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}.game-tab{padding:10px 5px;min-height:105px}.game-icon{height:35px;width:35px;font-size:18px}.game-title{font-size:12px}.game-sub{font-size:10px}.group-grid{gap:6px}.group-tile{min-height:60px;font-size:11px}.panel{padding:16px}.memory-grid{gap:7px}.topright{font-size:11px}}
-    @media(max-width:430px){.games{grid-template-columns:repeat(3,minmax(0,1fr))}.game-tab{gap:6px}.game-icon{font-size:17px}.game-sub{line-height:1.25}}
-
-  </style>
-</head>
-<body>
-<div class="wrap">
-  <header>
-    <a class="brand" href="/" aria-label="Droxion Play home"><span class="brandmark">D</span>DROXION<span style="color:var(--aqua)">PLAY</span></a>
-    <div class="topright"><span id="todayLabel">Today's games</span><span class="pill">100% free preview</span></div>
-  </header>
-  <main>
-    <div class="eyebrow">A little fun, every day</div>
-    <h1>A fresh puzzle.<br><span>Every day.</span></h1>
-    <p class="lead">Play six simple, original games. Solve today’s word and logic challenges or take a quick arcade break. Free to play, no signup needed.</p>
-    <div class="stats"><div class="stat"><b id="streak">0</b> day word streak</div><div class="stat"><b id="wins">0</b> word wins</div><div class="stat"><b id="snakeHigh">0</b> snake high score</div></div>
-    <nav class="games" role="tablist" aria-label="Choose game">
-      <button class="game-tab" role="tab" aria-selected="true" aria-controls="letterPanel" id="letterTab" data-game="letter"><span class="game-icon" aria-hidden="true">🔤</span><span><span class="game-title">Letter Five</span><span class="game-sub">Daily word challenge</span></span></button>
-      <button class="game-tab" role="tab" aria-selected="false" aria-controls="numberPanel" id="numberTab" data-game="number"><span class="game-icon" aria-hidden="true">🔢</span><span><span class="game-title">Code Four</span><span class="game-sub">Daily logic challenge</span></span></button>
-      <button class="game-tab" role="tab" aria-selected="false" aria-controls="snakePanel" id="snakeTab" data-game="snake"><span class="game-icon" aria-hidden="true">🐍</span><span><span class="game-title">Snake Rush</span><span class="game-sub">Play as long as you like</span></span></button>
-
-      <button class="game-tab" role="tab" aria-selected="false" aria-controls="groupsPanel" id="groupsTab" data-game="groups"><span class="game-icon" aria-hidden="true">🧩</span><span><span class="game-title">Word Groups</span><span class="game-sub">Daily word sets</span></span></button>
-      <button class="game-tab" role="tab" aria-selected="false" aria-controls="sudokuPanel" id="sudokuTab" data-game="sudoku"><span class="game-icon" aria-hidden="true">🔲</span><span><span class="game-title">Mini Sudoku</span><span class="game-sub">Daily number grid</span></span></button>
-      <button class="game-tab" role="tab" aria-selected="false" aria-controls="memoryPanel" id="memoryTab" data-game="memory"><span class="game-icon" aria-hidden="true">🎴</span><span><span class="game-title">Memory Match</span><span class="game-sub">Quick brain break</span></span></button>
-    </nav>
-    <section class="arena" id="letterPanel" role="tabpanel" aria-labelledby="letterTab">
-      <div class="panel">
-        <div class="section-title"><h2>Letter Five</h2><span class="soft-badge">NEW EVERY DAY</span></div>
-        <p class="subtext">Find the hidden five-letter word. You have six tries. Everyone gets the same word each UTC day.</p>
-        <div class="status" id="wordStatus" role="status" aria-live="polite">Type your first five-letter guess.</div>
-        <div class="board" id="wordBoard" aria-label="Word guesses"></div>
-        <div class="keyboard" id="keyboard" aria-label="Letter keyboard"></div>
-        <div class="actionrow"><button class="secondary" id="wordShare">Share results</button></div>
-      </div>
-      <aside class="panel">
-        <div class="side-card"><h3>How to play</h3><p>Guess any five-letter word, then press Enter. Tiles change colors to show how close your guess is.</p><div class="legend"><span><i style="background:#32896d"></i>Right spot</span><span><i style="background:#a07937"></i>Wrong spot</span><span><i style="background:#424961"></i>Not in word</span></div><p>A letter can appear more than once. Your progress stays on this device.</p></div>
-        <div class="side-card"><h3>Why come back?</h3><p>One fresh puzzle every day, a local win streak, and a result you can share without revealing the answer.</p></div>
-        <div class="side-card"><h3>Support the games</h3><p>All six games are free during the preview. No ads, paid accounts, or checkouts yet.</p></div>
-      </aside>
-    </section>
-    <section class="arena hidden" id="numberPanel" role="tabpanel" aria-labelledby="numberTab">
-      <div class="panel">
-        <div class="section-title"><h2>Code Four</h2><span class="soft-badge">NEW EVERY DAY</span></div>
-        <p class="subtext">Crack a four-digit code with no repeated digits. Seven guesses. Each guess reveals exact and misplaced matches.</p>
-        <div class="status" id="codeStatus" role="status" aria-live="polite">Try four different digits.</div>
-        <label for="codeInput" class="visually-hidden">Your four-digit guess</label>
-        <input id="codeInput" class="code-input" type="text" inputmode="numeric" autocomplete="off" maxlength="4" placeholder="0000" pattern="[0-9]{4}">
-        <div class="actionrow"><button class="primary" id="codeSubmit">Check code</button><button class="secondary" id="codeShare">Share results</button></div>
-        <div class="history" id="codeHistory" aria-label="Previous code guesses"></div>
-      </div>
-      <aside class="panel"><div class="side-card"><h3>How to play</h3><p>The secret code contains four different digits, including a possible leading zero.</p><ul class="list"><li><b>Exact:</b> right digit in the right position</li><li><b>Misplaced:</b> right digit in a different position</li><li>Use the clues to solve it in seven tries</li></ul></div><div class="side-card"><h3>Shared daily challenge</h3><p>Everyone receives the same code for the day. A new one arrives at 00:00 UTC.</p></div></aside>
-    </section>
-    <section class="arena hidden" id="snakePanel" role="tabpanel" aria-labelledby="snakeTab">
-      <div class="panel">
-        <div class="section-title"><h2>Snake Rush</h2><span class="soft-badge">ENDLESS ARCADE</span></div>
-        <p class="subtext">Collect the glowing squares. Don't hit the wall or your own tail. Play using arrow keys, WASD, or the on-screen buttons.</p>
-        <div class="snake-info">Score: <span id="snakeScore">0</span> &nbsp; · &nbsp; Best: <span id="snakeBest">0</span></div>
-        <canvas id="snakeCanvas" width="400" height="400" aria-label="Snake game board, twenty by twenty cells"></canvas>
-        <div class="actionrow"><button class="primary" id="snakeStart">Start game</button><button class="secondary" id="snakePause">Pause</button></div>
-        <div class="pad" aria-label="Snake direction controls"><button class="up" data-dir="up" aria-label="Up">↑</button><button class="left" data-dir="left" aria-label="Left">←</button><button class="down" data-dir="down" aria-label="Down">↓</button><button class="right" data-dir="right" aria-label="Right">→</button></div>
-        <div class="status" id="snakeStatus" role="status" aria-live="polite">Start whenever you're ready.</div>
-      </div>
-      <aside class="panel"><div class="side-card"><h3>Beat your best</h3><p>Snake Rush is always available, not just once a day. Your best score stays saved on this device.</p></div><div class="side-card"><h3>Controls</h3><p>Arrow keys or WASD on desktop. Tap the arrow buttons on your phone. Pause if you need a break.</p></div></aside>
-    </section>
-
-    <section class="arena hidden" id="groupsPanel" role="tabpanel" aria-labelledby="groupsTab">
-      <div class="panel">
-        <div class="section-title"><h2>Word Groups</h2><span class="soft-badge">DAILY PUZZLE</span></div>
-        <p class="subtext">Find four groups of four related words. Select four words that belong together.</p>
-        <div class="status" id="groupsStatus" role="status" aria-live="polite">Select four connected words.</div>
-        <div id="solvedGroups" aria-label="Solved groups"></div>
-        <div class="group-grid" id="groupsGrid" aria-label="Word group choices"></div>
-        <div class="attempts" id="groupsAttempts"></div>
-        <div class="actionrow"><button class="secondary" id="groupsClear">Deselect</button><button class="primary" id="groupsSubmit">Submit group</button><button class="secondary" id="groupsShare">Share</button></div>
-      </div>
-      <aside class="panel"><div class="side-card"><h3>Find the connection</h3><p>Each of the 16 words belongs to exactly one of four categories. Pick the four words you think share something in common.</p></div><div class="side-card"><h3>Daily challenge</h3><p>There is one fresh puzzle every day. You have four mistakes to complete all the categories. Your progress is saved on your device.</p></div></aside>
-    </section>
-    <section class="arena hidden" id="sudokuPanel" role="tabpanel" aria-labelledby="sudokuTab">
-      <div class="panel">
-        <div class="section-title"><h2>Mini Sudoku</h2><span class="soft-badge">DAILY PUZZLE</span></div>
-        <p class="subtext">Fill the 4×4 grid using 1, 2, 3, 4. Each row, column and 2×2 box needs each digit once.</p>
-        <div class="status" id="sudokuStatus" role="status" aria-live="polite">Complete the empty squares.</div>
-        <div class="sudoku-grid" id="sudokuGrid" aria-label="Four by four Sudoku grid"></div>
-        <div class="actionrow"><button class="primary" id="sudokuCheck">Check solution</button><button class="secondary" id="sudokuClear">Clear entries</button><button class="secondary" id="sudokuShare">Share</button></div>
-      </div>
-      <aside class="panel"><div class="side-card"><h3>How to play</h3><p>Put the numbers 1–4 into every empty square. Avoid repeating numbers in any row, column or 2×2 section.</p></div><div class="side-card"><h3>Small but satisfying</h3><p>Mini Sudoku is a quick logic puzzle designed for phones and desktops. A new board is generated each day.</p></div></aside>
-    </section>
-    <section class="arena hidden" id="memoryPanel" role="tabpanel" aria-labelledby="memoryTab">
-      <div class="panel">
-        <div class="section-title"><h2>Memory Match</h2><span class="soft-badge">PLAY ANYTIME</span></div>
-        <p class="subtext">Flip two cards at a time. Find all eight matching pairs using as few turns as possible.</p>
-        <div class="status" id="memoryStatus" role="status" aria-live="polite">Tap any card to start.</div>
-        <div class="memory-stats"><span id="memoryMoves">0</span> turns · <span id="memoryPairs">0</span>/8 pairs · Best: <span id="memoryBest">—</span></div>
-        <div class="memory-grid" id="memoryGrid" aria-label="Memory game cards"></div>
-        <div class="actionrow"><button class="primary" id="memoryRestart">New game</button></div>
-      </div>
-      <aside class="panel"><div class="side-card"><h3>Train your memory</h3><p>Remember where each symbol appears and flip its partner. Every new game reshuffles the cards.</p></div><div class="side-card"><h3>No daily limit</h3><p>Play as often as you want. Your personal best is stored in this browser.</p></div></aside>
-    </section>
-  </main>
-  <footer class="footnote"><span>© <span id="year"></span> Droxion Play · Original daily puzzles and arcade games.</span><span>No account, tracking, ads, or payments in this preview. Scores are saved only in your browser. New daily puzzles reset at 00:00 UTC.</span></footer>
-</div>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#fafaf8">
+<meta name="description" content="FIVE by Droxion is a free daily five-letter word puzzle. Guess the word in six tries, practice freely, and track your streaks.">
+<meta name="robots" content="noindex,nofollow">
+<title>FIVE by Droxion — A fresh puzzle every day</title>
+<style>
+:root{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;--bg:#fafaf8;--surface:#fff;--text:#242820;--muted:#747d75;--border:#e1e5df;--key:#dce1d9;--green:#568b59;--yellow:#b7a047;--gray:#7e8981;--accent:#255b40;--soft:#eff4ed;color-scheme:light}
+:root[data-theme=dark]{--bg:#171b17;--surface:#232a23;--text:#f3f5ee;--muted:#adb6ad;--border:#3b443c;--key:#455047;--green:#70a876;--yellow:#c6af53;--gray:#708178;--accent:#a6d9ac;--soft:#334136;color-scheme:dark}
+:root[data-contrast=on]{--green:#e48c37;--yellow:#438aba}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);min-height:100vh}button{font:inherit;cursor:pointer;color:inherit}button:disabled{opacity:.45;cursor:default}button:focus-visible{outline:3px solid var(--yellow);outline-offset:3px}
+header{border-bottom:1px solid var(--border);background:var(--surface)}.nav{max-width:1060px;margin:auto;padding:12px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand{display:flex;gap:10px;align-items:center;text-decoration:none;color:var(--text);font-weight:900;font-size:15px;letter-spacing:2.5px}.brandmark{display:grid;place-items:center;width:37px;height:37px;border-radius:10px;background:var(--accent);color:var(--surface);font-size:22px;letter-spacing:-1px}.byline{font-size:9px;letter-spacing:2px;color:var(--muted);font-weight:800;display:block;margin-top:2px}
+.nav-right{display:flex;align-items:center;gap:5px}.date{font-size:12px;color:var(--muted);margin-right:10px}.iconbtn{font-size:20px;border:0;background:transparent;width:38px;height:38px;border-radius:10px}.iconbtn:hover{background:var(--soft)}
+main{max-width:940px;margin:auto;padding:30px 17px 70px}.hero{text-align:center;max-width:600px;margin:0 auto 21px}.eyebrow{font-size:10px;color:var(--accent);letter-spacing:2.7px;text-transform:uppercase;font-weight:850}
+h1{font-family:Georgia,"Times New Roman",serif;font-size:clamp(39px,5.5vw,59px);line-height:1.1;letter-spacing:-1.7px;margin:10px 0}.hero p{font-size:14px;color:var(--muted);line-height:1.55;margin:0}
+.modes{margin:21px auto 0;display:flex;gap:5px;border:1px solid var(--border);border-radius:99px;background:var(--surface);padding:5px;width:max-content}.modes button{border:0;background:transparent;border-radius:99px;padding:10px 20px;font-weight:800;font-size:12px;color:var(--muted)}.modes button.active{background:var(--accent);color:var(--surface)}
+.layout{display:grid;grid-template-columns:minmax(0,630px) 230px;gap:17px;align-items:start}.game{border:1px solid var(--border);background:var(--surface);border-radius:18px;padding:20px;min-width:0;box-shadow:0 10px 35px #00000007}
+.gamehead{display:flex;align-items:center;justify-content:space-between;gap:8px}.gamehead strong{font-size:14px}.badge{color:var(--accent);background:var(--soft);padding:7px 10px;border-radius:99px;font-size:10px;font-weight:800}
+.progress{display:flex;gap:5px;margin:13px 0 9px}.progress i{height:4px;border-radius:5px;background:var(--border);flex:1}.progress i.used{background:var(--green)}.progress i.current{background:var(--yellow)}
+#status{font-size:13px;font-weight:600;color:var(--muted);text-align:center;min-height:36px;display:flex;align-items:center;justify-content:center;padding:4px;line-height:1.4}#status.won{color:var(--green)}
+.board{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;width:min(100%,333px);margin:10px auto 20px}
+.tile{aspect-ratio:1;min-width:0;display:grid;place-items:center;background:var(--surface);border:2px solid #cdd4cd;color:var(--text);font-size:clamp(22px,5vw,32px);font-weight:900}.tile.filled{border-color:var(--gray);animation:pop .12s ease-out}.tile.exact{background:var(--green);border-color:var(--green);color:#fff}.tile.present{background:var(--yellow);border-color:var(--yellow);color:#fff}.tile.miss{background:var(--gray);border-color:var(--gray);color:#fff}.tile.flip{animation:flip .42s ease-in-out}
+@keyframes flip{0%{transform:rotateX(0)}48%{transform:rotateX(89deg)}100%{transform:rotateX(0)}}@keyframes pop{from{transform:scale(.9)}to{transform:scale(1)}}
+.keyboard{display:grid;gap:5px;max-width:535px;margin:auto}.keyrow{display:flex;justify-content:center;gap:4px}.key{min-width:0;height:48px;max-width:50px;flex:1;background:var(--key);border:0;border-radius:5px;font-size:13px;font-weight:850}.key.wide{flex:1.4;max-width:71px;font-size:10px}.key.exact{background:var(--green);color:#fff}.key.present{background:var(--yellow);color:#fff}.key.miss{background:var(--gray);color:#fff}.key:active{transform:scale(.96)}
+.actions{display:flex;justify-content:center;flex-wrap:wrap;gap:9px;margin-top:17px}.btn{border:1px solid var(--border);padding:10px 15px;background:var(--surface);border-radius:10px;font-size:12px;font-weight:800}.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--surface)}.btn:hover{filter:brightness(.95)}
+.side{display:grid;gap:12px}.sidecard{border:1px solid var(--border);border-radius:14px;padding:17px;background:var(--surface)}.sidecard h2{font-family:Georgia,"Times New Roman",serif;margin:0 0 10px;font-size:19px}.sidecard p{margin:0;color:var(--muted);line-height:1.6;font-size:12px}.statline{display:flex;justify-content:space-between;padding:9px 0;border-top:1px solid var(--border);font-size:12px}.statline b{font-size:15px}.statline:first-of-type{border-top:0}.countdown{font-size:19px;font-weight:850;letter-spacing:1.2px;color:var(--accent);margin:8px 0}
+footer{max-width:930px;border-top:1px solid var(--border);padding:17px 10px 0;text-align:center;margin:26px auto;color:var(--muted);font-size:11px;line-height:1.8}
+.overlay{position:fixed;inset:0;z-index:20;background:#172217a6;display:grid;place-items:center;padding:15px}.overlay[hidden]{display:none}.modal{max-width:460px;width:100%;background:var(--surface);border-radius:19px;padding:22px;max-height:90dvh;overflow:auto;border:1px solid var(--border);box-shadow:0 25px 90px #0003}.modalhead{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border);padding-bottom:12px}.modalhead h2{font-family:Georgia,serif;margin:0;font-size:25px}.modal p,.modal li{font-size:13px;color:var(--muted);line-height:1.7}.modal ul{padding-left:20px}.modal h3{font-size:13px;margin:17px 0 8px}
+.example{display:flex;gap:5px}.example span{display:grid;place-items:center;height:42px;width:42px;border:2px solid var(--border);font-size:21px;font-weight:850}.example span.exact{background:var(--green);color:white;border-color:var(--green)}.example span.present{background:var(--yellow);color:white;border-color:var(--yellow)}.example span.miss{background:var(--gray);color:white;border-color:var(--gray)}
+.statgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin:18px 0}.statbox{background:var(--soft);padding:12px 5px;border-radius:10px;text-align:center}.statbox b{display:block;font-size:22px}.statbox small{font-size:10px;color:var(--muted)}.distrow{display:flex;align-items:center;gap:8px;margin:5px 0}.distrow small{width:10px}.distbar{background:var(--gray);color:white;height:20px;display:flex;justify-content:flex-end;align-items:center;padding:0 5px;border-radius:4px;font-size:11px;font-weight:800;min-width:25px}
+.setting{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--border);font-size:13px}.setting input{accent-color:var(--green);width:20px;height:20px}.setting small{color:var(--muted);display:block;font-size:11px;margin-top:4px}
+.toast{position:fixed;top:82px;left:50%;transform:translateX(-50%);background:var(--text);color:var(--surface);padding:11px 17px;border-radius:11px;font-size:13px;font-weight:800;box-shadow:0 8px 20px #0002;z-index:30;max-width:85vw;text-align:center}.toast[hidden]{display:none}
+@media(max-width:850px){.layout{grid-template-columns:1fr}.side{grid-template-columns:repeat(2,minmax(0,1fr))}.sidecard:last-child{grid-column:1/-1}}
+@media(max-width:520px){.nav{padding:10px 13px}.date{display:none}main{padding:23px 9px 55px}.hero p{font-size:12px}.game{padding:14px 8px;border-radius:15px}h1{font-size:41px}.board{width:min(100%,320px);margin:9px auto 14px;gap:5px}.keyrow{gap:3px}.key{height:47px;font-size:12px}.key.wide{font-size:9px}.side{grid-template-columns:1fr}.sidecard:last-child{grid-column:auto}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}}
+</style>
+</head><body>
+<header><div class="nav"><a href="/" class="brand"><span class="brandmark">F</span><span>FIVE<span class="byline">BY DROXION</span></span></a><div class="nav-right"><span class="date" id="headerDate"></span><button class="iconbtn" id="help" aria-label="How to play" title="How to play">ⓘ</button><button class="iconbtn" id="stats" aria-label="Statistics" title="Statistics">▥</button><button class="iconbtn" id="settings" aria-label="Settings" title="Settings">⚙</button></div></div></header>
+<main><section class="hero"><div class="eyebrow">A little victory, every day</div><h1>Five letters.<br>One little victory.</h1><p>Find the hidden word in six tries. One daily challenge, unlimited practice and your own winning streak.</p><div class="modes" role="group" aria-label="Game mode"><button class="active" id="daily" aria-pressed="true">☀ Daily puzzle</button><button id="practice" aria-pressed="false">∞ Practice</button></div></section>
+<div class="layout"><section class="game" aria-label="Word guessing game"><div class="gamehead"><strong id="gameTitle">Today's puzzle</strong><span class="badge" id="gameBadge">DAILY</span></div><div class="progress" id="progress"></div><div id="status" role="status" aria-live="polite">Guess the word</div><div class="board" id="board" role="group" aria-label="Six guesses of five letters"></div><div class="keyboard" id="keyboard" aria-label="Letter keyboard"></div><div class="actions"><button class="btn" id="hint">💡 Hint</button><button class="btn primary" id="share" hidden>Share your result</button><button class="btn" id="again" hidden>New practice word ↻</button></div></section>
+<aside class="side"><div class="sidecard"><h2>Your progress</h2><div class="statline"><span>Current streak</span><b id="streak">0 🔥</b></div><div class="statline"><span>Daily wins</span><b id="wins">0</b></div><div class="statline"><span>Win rate</span><b id="rate">0%</b></div><p>Stats stay on your device. No account necessary.</p></div><div class="sidecard"><h2>A new word tomorrow.</h2><div class="countdown" id="countdown">--:--:--</div><p>The daily game refreshes at midnight UTC.</p></div><div class="sidecard"><h2>How the colors work</h2><p>🟩 Right letter, right place.<br>🟨 Right letter, wrong place.<br>⬜ Not in the word.<br><br>You can reveal one letter after three guesses.</p></div></aside></div>
+<footer>FIVE by Droxion · An original five-letter word game. Free preview with no ads or checkout.<br>Daily puzzles use UTC dates. Game progress is saved in this browser only.</footer></main>
+<div class="toast" id="toast" role="status" aria-live="assertive" hidden></div>
+<div class="overlay" id="overlay" hidden><div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="modalhead"><h2 id="modalTitle">How to play</h2><button class="iconbtn" id="close" aria-label="Close">×</button></div><div id="modalBody"></div></div></div>
 <script>
 (function(){
-  "use strict";
-  const $=id=>document.getElementById(id);
-  const DAY=new Date().toISOString().slice(0,10);
-  const dateNumber=Number(DAY.replaceAll("-",""));
-  $("todayLabel").textContent=new Date().toLocaleDateString(undefined,{month:"short",day:"numeric",year:"numeric",timeZone:"UTC"})+" · UTC";
-  $("year").textContent=String(new Date().getFullYear());
-  const read=(k,fb)=>{try{const raw=localStorage.getItem(k);return raw?JSON.parse(raw):fb}catch(e){return fb}};
-  const save=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}};
-  const notify=(id,msg)=>{$(id).textContent=msg};
-  function share(msg,id){if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(msg).then(()=>notify(id,"Results copied! Share with a friend.")).catch(()=>fallbackCopy(msg,id));}else fallbackCopy(msg,id)}
-  function fallbackCopy(msg,id){const t=document.createElement("textarea");t.value=msg;t.style.position="fixed";t.style.opacity="0";document.body.append(t);t.select();let ok=false;try{ok=document.execCommand("copy")}catch(e){}t.remove();notify(id,ok?"Results copied!":"Copy this result: "+msg.replace(/\n/g," "))}
-  function seed(x){let n=x|0;return ()=>{n=(Math.imul(n,1664525)+1013904223)|0;return (n>>>0)/4294967296}}
-  function dayIndex(salt,size){return Math.floor(seed(dateNumber+salt)()*size)}
-  const WORDS=("APPLE GRAPE PEACH LEMON BERRY MANGO MELON PLANT STONE CLOUD RIVER OCEAN BEACH LIGHT DREAM HEART MUSIC SMILE LAUGH BRAVE SHINE WATER EARTH STARS NIGHT HOUSE BREAD CHAIR TABLE TRAIN TRACK GREEN BLUE? WHITE BLACK BROWN SWEET SUGAR HONEY PEARL FLAME BRICK GLASS PAPER BOOKS CLOCK HAPPY SMALL LARGE QUIET SMART FRESH CLEAR ROUND STORY WHEAT FLOUR PIZZA PASTA RANCH SHEEP HORSE MOUSE TIGER EAGLE ROBIN SPARK MAGIC BONUS SOLAR SPACE ORBIT COMET WORLD UNITY PEACE HUMAN VIVID FOCUS BRAIN THINK LOGIC SKILL SCORE LEVEL GAME? PIXEL POWER SPEED QUICK CHESS QUEEN KING? ROYAL PARTY SHARE TRUST SOUND VOICE RADIO VIDEO DANCE ACTOR MOVIE STAGE POINT CLOSE OPEN? ENTRY FIRST FINAL EARLY DAILY AGAIN BRING CARRY DRIVE ROADS CYCLE TRAIL MAPLE CEDAR BLOOM FIELD SUNNY WINDY RAINY SNOWY CHILL WARM? FROST CRISP JUICE FRUIT CLEAN FANCY HOTEL MONEY PRICE VALUE COINS SPEND SAVER BUILD WRITE READ? LEARN TEACH STUDY CLASS CRAFT ART? COLOR PAINT SHAPE LINES ANGLE EQUAL COUNT NUMBER").split(" ").filter(w=>/^[A-Z]{5}$/.test(w));
-  const answer=WORDS[dayIndex(163,WORDS.length)];
-  const wk="droxion-word-v1-"+DAY;
-  const word=read(wk,{guesses:[],done:false,won:false});
-  if(!Array.isArray(word.guesses))word.guesses=[];
-  let partial="";
-  let active="letter";
-  function evaluate(guess,target){
-    const result=Array(5).fill("miss"),remain={};
-    for(let i=0;i<5;i++){if(guess[i]===target[i])result[i]="exact";else remain[target[i]]=(remain[target[i]]||0)+1}
-    for(let i=0;i<5;i++){if(result[i]==="exact")continue;const ch=guess[i];if(remain[ch]>0){result[i]="present";remain[ch]--}}
-    return result;
-  }
-  function displayWord(){
-    const board=$("wordBoard");board.replaceChildren();
-    for(let row=0;row<6;row++)for(let col=0;col<5;col++){
-      const cell=document.createElement("div");cell.className="tile";const item=word.guesses[row];
-      let letter="";
-      if(item){letter=item.word[col];cell.classList.add(item.marks[col])}
-      else if(row===word.guesses.length&&!word.done){letter=partial[col]||"";if(letter)cell.classList.add("filled")}
-      cell.textContent=letter;cell.setAttribute("aria-label","Row "+(row+1)+" column "+(col+1)+": "+(letter||"empty"));
-      board.append(cell);
-    }
-    const ranks={miss:1,present:2,exact:3},keys={};
-    word.guesses.forEach(g=>g.word.split("").forEach((letter,i)=>{const state=g.marks[i];if(!keys[letter]||ranks[state]>ranks[keys[letter]])keys[letter]=state}));
-    const kb=$("keyboard");kb.replaceChildren();
-    ["QWERTYUIOP","ASDFGHJKL","ENTER|ZXCVBNM|BACK"].forEach(line=>{
-      const row=document.createElement("div");row.className="keyrow";
-      (line.includes("|")?["ENTER",..."ZXCVBNM","BACK"]:[...line]).forEach(k=>{
-        const b=document.createElement("button");b.type="button";b.className="key"+(k.length>1?" wide":"")+(keys[k]?" "+keys[k]:"");b.textContent=k==="BACK"?"⌫":k;b.setAttribute("aria-label",k==="BACK"?"Backspace":k==="ENTER"?"Submit guess":k);b.addEventListener("click",()=>wordKey(k));row.append(b)
-      });kb.append(row)
-    });
-    if(word.done)notify("wordStatus",word.won?"Great work! Solved in "+word.guesses.length+" of 6 tries.": "Today's puzzle is complete. The word was "+answer+".");
-    else notify("wordStatus","Guess "+(word.guesses.length+1)+" of 6 · "+(partial.length?partial.length+"/5 letters":"Enter a five-letter word."));
-  }
-  function wordKey(k){
-    if(active!=="letter"||word.done)return;
-    if(k==="BACK")partial=partial.slice(0,-1);
-    else if(k==="ENTER"){
-      if(partial.length!==5){notify("wordStatus","Type five letters, then press Enter.");return}
-      const guess=partial;const marks=evaluate(guess,answer);word.guesses.push({word:guess,marks});
-      if(guess===answer){word.done=true;word.won=true;const days=read("droxion-win-days-v1",[]);if(!days.includes(DAY)){days.push(DAY);save("droxion-win-days-v1",days)}}
-      else if(word.guesses.length>=6){word.done=true;word.won=false}
-      partial="";save(wk,word);updateStats()
-    }else if(/^[A-Z]$/.test(k)&&partial.length<5)partial+=k;
-    displayWord()
-  }
-  function updateStats(){
-    const days=read("droxion-win-days-v1",[]).filter(x=>/^\d{4}-\d{2}-\d{2}$/.test(x));
-    $("wins").textContent=String(days.length);
-    const set=new Set(days);let n=0,d=new Date(DAY+"T00:00:00Z");
-    if(!set.has(DAY))d.setUTCDate(d.getUTCDate()-1);
-    while(set.has(d.toISOString().slice(0,10))){n++;d.setUTCDate(d.getUTCDate()-1)}
-    $("streak").textContent=String(n);
-  }
-  $("wordShare").addEventListener("click",()=>{
-    if(!word.guesses.length){notify("wordStatus","Make a guess before sharing.");return}
-    const score=word.won?word.guesses.length+"/6":word.done?"X/6":"in progress";
-    const grid=word.guesses.map(g=>g.marks.map(m=>m==="exact"?"🟩":m==="present"?"🟨":"⬛").join("")).join("\n");
-    share("Droxion Play · Letter Five · "+DAY+"\n"+score+"\n"+grid+"\n"+location.origin,"wordStatus");
-  });
-  const ck="droxion-code-v1-"+DAY,code=read(ck,{guesses:[],done:false,won:false});
-  if(!Array.isArray(code.guesses))code.guesses=[];
-  const rand=seed(dateNumber+975),digits="0123456789".split("");
-  for(let i=digits.length-1;i>0;i--){const j=Math.floor(rand()*(i+1));[digits[i],digits[j]]=[digits[j],digits[i]]}
-  const secret=digits.slice(0,4).join("");
-  function displayCode(){
-    const history=$("codeHistory");history.replaceChildren();
-    code.guesses.forEach(g=>{
-      const row=document.createElement("div");row.className="hist-row";
-      const digits=document.createElement("span");digits.className="hist-digits";digits.textContent=g.value;
-      const help=document.createElement("span");help.className="hist-help";help.textContent=g.exact+" exact · "+g.misplaced+" misplaced";row.append(digits,help);history.append(row);
-    });
-    if(!code.guesses.length){const msg=document.createElement("p");msg.className="subtext";msg.textContent="Your clues will appear here.";history.append(msg)}
-    $("codeInput").disabled=code.done;$("codeSubmit").disabled=code.done;
-    if(code.done)notify("codeStatus",code.won?"Code cracked in "+code.guesses.length+" guesses!":"Out of guesses. Today's code was "+secret+".");
-    else notify("codeStatus","Guess "+(code.guesses.length+1)+" of 7. Every digit must be different.");
-  }
-  function submitCode(){
-    if(code.done)return;
-    const value=$("codeInput").value.trim();
-    if(!/^\d{4}$/.test(value)||new Set(value).size!==4){notify("codeStatus","Enter exactly four different digits.");return}
-    let exact=0,misplaced=0;for(let i=0;i<4;i++){if(value[i]===secret[i])exact++;else if(secret.includes(value[i]))misplaced++}
-    code.guesses.push({value,exact,misplaced});
-    if(value===secret){code.done=true;code.won=true}else if(code.guesses.length>=7){code.done=true}
-    save(ck,code);$("codeInput").value="";displayCode()
-  }
-  $("codeInput").addEventListener("input",e=>e.target.value=e.target.value.replace(/\D/g,"").slice(0,4));
-  $("codeInput").addEventListener("keydown",e=>{if(e.key==="Enter")submitCode()});
-  $("codeSubmit").addEventListener("click",submitCode);
-  $("codeShare").addEventListener("click",()=>{
-    if(!code.guesses.length){notify("codeStatus","Make a guess before sharing.");return}
-    const score=code.won?code.guesses.length+"/7":code.done?"X/7":"in progress";
-    share("Droxion Play · Code Four · "+DAY+"\n"+score+"\n"+code.guesses.map(g=>"●".repeat(g.exact)+"○".repeat(g.misplaced)+" "+g.value.length+" digits").join("\n")+"\n"+location.origin,"codeStatus");
-  });
-  const canvas=$("snakeCanvas"),ctx=canvas.getContext("2d"),N=20,UNIT=20;
-  let snake=[],food={x:13,y:10},direction={x:1,y:0},nextDirection={x:1,y:0},snakeScore=0,timer=null,playing=false,paused=false;
-  function makeFood(){const empty=[];for(let y=0;y<N;y++)for(let x=0;x<N;x++)if(!snake.some(s=>s.x===x&&s.y===y))empty.push({x,y});return empty.length?empty[Math.floor(Math.random()*empty.length)]:null}
-  function drawSnake(){
-    ctx.clearRect(0,0,400,400);ctx.fillStyle="#101a2b";ctx.fillRect(0,0,400,400);
-    ctx.strokeStyle="#1c2a3f";ctx.lineWidth=1;for(let i=0;i<=N;i++){ctx.beginPath();ctx.moveTo(i*UNIT,0);ctx.lineTo(i*UNIT,400);ctx.stroke();ctx.beginPath();ctx.moveTo(0,i*UNIT);ctx.lineTo(400,i*UNIT);ctx.stroke()}
-    ctx.fillStyle="#f7c76d";ctx.beginPath();ctx.roundRect(food.x*UNIT+3,food.y*UNIT+3,14,14,4);ctx.fill();
-    snake.forEach((s,i)=>{ctx.fillStyle=i===0?"#c1ffe2":"#60cda6";ctx.beginPath();ctx.roundRect(s.x*UNIT+2,s.y*UNIT+2,16,16,5);ctx.fill()});
-  }
-  function stopSnake(message){clearInterval(timer);timer=null;playing=false;paused=false;if(message)notify("snakeStatus",message);$("snakePause").textContent="Pause"}
-  function resetSnake(){snake=[{x:7,y:10},{x:6,y:10},{x:5,y:10}];direction={x:1,y:0};nextDirection={x:1,y:0};food=makeFood();snakeScore=0;$("snakeScore").textContent="0";drawSnake()}
-  function stepSnake(){
-    direction=nextDirection;const head={x:snake[0].x+direction.x,y:snake[0].y+direction.y};
-    const eats=head.x===food.x&&head.y===food.y;
-    const body=eats?snake:snake.slice(0,-1);
-    if(head.x<0||head.x>=N||head.y<0||head.y>=N||body.some(s=>s.x===head.x&&s.y===head.y)){stopSnake("Game over! Score: "+snakeScore+". Try again.");return}
-    snake.unshift(head);if(eats){snakeScore+=10;$("snakeScore").textContent=String(snakeScore);const best=read("droxion-snake-best-v1",0);if(snakeScore>best){save("droxion-snake-best-v1",snakeScore);updateSnakeBest()}const newFood=makeFood();if(!newFood){stopSnake("Perfect board! You win.");return}food=newFood}else snake.pop();
-    drawSnake()
-  }
-  function startSnake(){stopSnake();resetSnake();playing=true;timer=setInterval(stepSnake,145);notify("snakeStatus","Go! Collect squares and avoid collisions.");$("snakeStart").textContent="Restart game"}
-  function togglePause(){if(!playing)return;if(paused){timer=setInterval(stepSnake,145);paused=false;$("snakePause").textContent="Pause";notify("snakeStatus","Game resumed.")}else{clearInterval(timer);timer=null;paused=true;$("snakePause").textContent="Resume";notify("snakeStatus","Paused.")}}
-  function setDirection(s){const map={up:{x:0,y:-1},down:{x:0,y:1},left:{x:-1,y:0},right:{x:1,y:0}},d=map[s];if(d&&!(d.x===-direction.x&&d.y===-direction.y))nextDirection=d}
-  function updateSnakeBest(){const high=read("droxion-snake-best-v1",0);$("snakeHigh").textContent=String(high);$("snakeBest").textContent=String(high)}
-  $("snakeStart").addEventListener("click",startSnake);$("snakePause").addEventListener("click",togglePause);
-  document.querySelectorAll("[data-dir]").forEach(b=>b.addEventListener("click",()=>setDirection(b.dataset.dir)));
-  
-  /* Daily Word Groups — original curated categories */
-  const GROUP_PACKS=[
-    [{name:"Fruit",words:["APRICOT","PAPAYA","KIWI","PLUM"]},{name:"Weather",words:["CLOUD","RAIN","WIND","SNOW"]},{name:"Music",words:["PIANO","DRUM","HARP","FLUTE"]},{name:"Movement",words:["SKIP","JOG","HOP","DANCE"]}],
-    [{name:"Time",words:["MINUTE","HOUR","DAY","WEEK"]},{name:"Ocean",words:["CORAL","REEF","TIDE","WAVE"]},{name:"Writing",words:["PEN","PENCIL","INK","PAPER"]},{name:"Tools",words:["HAMMER","SAW","WRENCH","DRILL"]}],
-    [{name:"Sports",words:["TENNIS","SOCCER","GOLF","RUGBY"]},{name:"Colors",words:["AZURE","IVORY","SCARLET","VIOLET"]},{name:"Kitchen",words:["OVEN","STOVE","SINK","PAN"]},{name:"Birds",words:["ROBIN","EAGLE","HERON","FINCH"]}],
-    [{name:"Computers",words:["MOUSE","KEYBOARD","SCREEN","CURSOR"]},{name:"Space",words:["PLANET","COMET","ORBIT","ASTEROID"]},{name:"Plants",words:["ROSE","TULIP","FERN","IVY"]},{name:"Travel",words:["TICKET","PASSPORT","SUITCASE","MAP"]}],
-    [{name:"Weather",words:["FOG","HAIL","SLEET","THUNDER"]},{name:"Drinks",words:["TEA","COFFEE","JUICE","WATER"]},{name:"Materials",words:["STEEL","WOOD","GLASS","COTTON"]},{name:"Art",words:["CANVAS","BRUSH","EASEL","PALETTE"]}],
-    [{name:"Shapes",words:["CIRCLE","SQUARE","TRIANGLE","OVAL"]},{name:"Animals",words:["OTTER","FOX","PANDA","ZEBRA"]},{name:"House parts",words:["WINDOW","DOOR","ROOF","FLOOR"]},{name:"Movement",words:["RUN","WALK","CRAWL","CLIMB"]}]
-  ];
-  const gp=GROUP_PACKS[dayIndex(411,GROUP_PACKS.length)];
-  const gkey="droxion-groups-v2-"+DAY,groupData=read(gkey,{solved:[],mistakes:0,history:[]});
-  if(!Array.isArray(groupData.solved))groupData.solved=[];
-  if(!Array.isArray(groupData.history))groupData.history=[];
-  let groupSelection=[];
-  function seededShuffle(items,salt){const arr=items.slice(),random=seed(dateNumber+salt);for(let i=arr.length-1;i>0;i--){const j=Math.floor(random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]]}return arr}
-  const groupOrder=seededShuffle(gp.flatMap((g,i)=>g.words.map(word=>({word,group:i}))),602);
-  function groupsOver(){return groupData.solved.length===4||groupData.mistakes>=4}
-  function renderGroups(){
-    const solved=$("solvedGroups");solved.replaceChildren();
-    groupData.solved.forEach(idx=>{const row=document.createElement("div");row.className="solved-group";const title=document.createElement("strong");title.textContent=gp[idx].name;const words=document.createElement("span");words.textContent=gp[idx].words.join(" · ");row.append(title,words);solved.append(row)});
-    const grid=$("groupsGrid");grid.replaceChildren();
-    groupOrder.filter(item=>!groupData.solved.includes(item.group)).forEach(item=>{
-      const button=document.createElement("button");button.className="group-tile"+(groupSelection.includes(item.word)?" selected":"");button.textContent=item.word;button.type="button";button.disabled=groupsOver();button.setAttribute("aria-pressed",String(groupSelection.includes(item.word)));
-      button.addEventListener("click",()=>{if(groupSelection.includes(item.word))groupSelection=groupSelection.filter(w=>w!==item.word);else if(groupSelection.length<4)groupSelection.push(item.word);renderGroups()});grid.append(button)
-    });
-    $("groupsAttempts").textContent=groupData.mistakes+" of 4 mistakes used · "+groupData.solved.length+" of 4 groups found";
-    $("groupsSubmit").disabled=groupsOver()||groupSelection.length!==4;$("groupsClear").disabled=groupsOver()||groupSelection.length===0;
-    if(groupsOver())notify("groupsStatus",groupData.solved.length===4?"Perfect! All four groups solved.":"Today's puzzle is finished. Come back tomorrow.");
-    else notify("groupsStatus",groupSelection.length?groupSelection.length+" of 4 words selected":"Select four words that share a category.");
-  }
-  $("groupsClear").addEventListener("click",()=>{groupSelection=[];renderGroups()});
-  $("groupsSubmit").addEventListener("click",()=>{
-    if(groupsOver()||groupSelection.length!==4)return;
-    const index=gp.findIndex(g=>g.words.every(w=>groupSelection.includes(w)));
-    if(index>=0&&!groupData.solved.includes(index)){groupData.solved.push(index);groupData.history.push("✓");notify("groupsStatus","Group found: "+gp[index].name)}
-    else{groupData.mistakes++;groupData.history.push("×")}
-    groupSelection=[];save(gkey,groupData);renderGroups()
-  });
-  $("groupsShare").addEventListener("click",()=>{if(groupData.history.length===0){notify("groupsStatus","Try your first group before sharing.");return}share("Droxion Play · Word Groups · "+DAY+"\n"+groupData.solved.length+"/4 groups · "+groupData.mistakes+" mistakes\n"+groupData.history.join(" ")+"\n"+location.origin,"groupsStatus")});
-
-  /* Mini Sudoku — seeded daily, uniquely solvable 4×4 puzzles */
-  const sudokuRandom=seed(dateNumber+731),numberOrder=[1,2,3,4];
-  for(let i=3;i>0;i--){const j=Math.floor(sudokuRandom()*(i+1));[numberOrder[i],numberOrder[j]]=[numberOrder[j],numberOrder[i]]}
-  const sudokuBase=[1,2,3,4,3,4,1,2,2,1,4,3,4,3,2,1],sudokuSolution=sudokuBase.map(v=>numberOrder[v-1]);
-  function countSolutions(board,cap){
-    let count=0;
-    function walk(){
-      if(count>=cap)return;
-      const idx=board.indexOf(0);
-      if(idx<0){count++;return}
-      const row=Math.floor(idx/4),col=idx%4;
-      for(let d=1;d<=4;d++){
-        let allowed=true;
-        for(let i=0;i<4;i++)if(board[row*4+i]===d||board[i*4+col]===d)allowed=false;
-        for(let r=2*Math.floor(row/2);r<2*Math.floor(row/2)+2;r++)for(let c=2*Math.floor(col/2);c<2*Math.floor(col/2)+2;c++)if(board[r*4+c]===d)allowed=false;
-        if(allowed){board[idx]=d;walk();board[idx]=0;if(count>=cap)return}
-      }
-    }
-    walk();return count;
-  }
-  const sudokuPuzzle=sudokuSolution.slice(),blankPositions=seededShuffle(Array.from({length:16},(_,i)=>i),846);
-  let blanks=0;
-  for(const pos of blankPositions){const old=sudokuPuzzle[pos];sudokuPuzzle[pos]=0;if(countSolutions(sudokuPuzzle.slice(),2)!==1){sudokuPuzzle[pos]=old}else blanks++;if(blanks>=8)break}
-  const skey="droxion-sudoku-v2-"+DAY,sudokuData=read(skey,{entries:{},won:false});
-  if(!sudokuData.entries||typeof sudokuData.entries!=="object")sudokuData.entries={};
-  function renderSudoku(){
-    const grid=$("sudokuGrid");grid.replaceChildren();
-    for(let i=0;i<16;i++){
-      const cell=document.createElement("input");cell.className="sudoku-cell"+(sudokuPuzzle[i]?" fixed":"");cell.type="text";cell.setAttribute("inputmode","numeric");cell.setAttribute("maxlength","1");cell.setAttribute("aria-label","Row "+(Math.floor(i/4)+1)+", column "+(i%4+1));
-      cell.value=String(sudokuPuzzle[i]||sudokuData.entries[i]||"");
-      cell.readOnly=!!sudokuPuzzle[i]||!!sudokuData.won;cell.autocomplete="off";
-      if(!sudokuPuzzle[i])cell.addEventListener("input",()=>{
-        const value=cell.value.replace(/[^1-4]/g,"").slice(-1);cell.value=value;cell.classList.remove("wrong");if(value)sudokuData.entries[i]=value;else delete sudokuData.entries[i];save(skey,sudokuData)
-      });
-      grid.append(cell);
-    }
-    $("sudokuCheck").disabled=sudokuData.won;$("sudokuClear").disabled=sudokuData.won;
-    notify("sudokuStatus",sudokuData.won?"Perfect! Today's Sudoku is complete.":"Fill each row, column and 2×2 box with 1–4.");
-  }
-  $("sudokuCheck").addEventListener("click",()=>{
-    if(sudokuData.won)return;let errors=0,missing=0;
-    [...$("sudokuGrid").children].forEach((cell,i)=>{if(sudokuPuzzle[i])return;if(!cell.value)missing++;else if(Number(cell.value)!==sudokuSolution[i]){cell.classList.add("wrong");errors++}else cell.classList.remove("wrong")});
-    if(missing)notify("sudokuStatus",missing+" squares still empty. Keep going!");
-    else if(errors)notify("sudokuStatus",errors+" square"+(errors===1?" needs":"s need")+" another look.");
-    else{sudokuData.won=true;save(skey,sudokuData);renderSudoku()}
-  });
-  $("sudokuClear").addEventListener("click",()=>{if(sudokuData.won)return;sudokuData.entries={};save(skey,sudokuData);renderSudoku()});
-  $("sudokuShare").addEventListener("click",()=>{share("Droxion Play · Mini Sudoku · "+DAY+"\n"+(sudokuData.won?"✅ Completed!":"Still solving…")+"\n"+location.origin,"sudokuStatus")});
-
-  /* Memory Match — accessible, freely replayable card matching */
-  const symbols=["🍋","🌸","🐙","🚀","🎸","🍩","🦋","🌙"];
-  let memoryCards=[],memoryOpen=[],memoryMatched=new Set(),memoryTurns=0,memoryBusy=false,memoryToken=0;
-  function memoryBest(){return read("droxion-memory-best-v2",null)}
-  function renderMemory(){
-    const grid=$("memoryGrid");grid.replaceChildren();
-    memoryCards.forEach((emoji,i)=>{
-      const open=memoryOpen.includes(i)||memoryMatched.has(i),matched=memoryMatched.has(i);
-      const button=document.createElement("button");button.type="button";button.className="memory-tile"+(open?" revealed":"")+(matched?" matched":"");
-      button.textContent=open?emoji:"?";button.setAttribute("aria-label",open?"Card "+(i+1)+": "+emoji:"Card "+(i+1)+": face down");button.disabled=memoryBusy||matched;button.addEventListener("click",()=>flipMemory(i));grid.append(button)
-    });
-    $("memoryMoves").textContent=String(memoryTurns);$("memoryPairs").textContent=String(memoryMatched.size/2);$("memoryBest").textContent=memoryBest()??"—";
-  }
-  function newMemory(){
-    memoryToken++;memoryCards=seededShuffle(symbols.concat(symbols),Math.floor(Math.random()*2000000000));memoryOpen=[];memoryMatched=new Set();memoryTurns=0;memoryBusy=false;renderMemory();notify("memoryStatus","Find all eight matching pairs.");
-  }
-  function flipMemory(i){
-    if(memoryBusy||memoryMatched.has(i)||memoryOpen.includes(i)||memoryOpen.length>=2)return;
-    memoryOpen.push(i);renderMemory();
-    if(memoryOpen.length===2){
-      memoryTurns++;const a=memoryOpen[0],b=memoryOpen[1];
-      if(memoryCards[a]===memoryCards[b]){memoryMatched.add(a);memoryMatched.add(b);memoryOpen=[];renderMemory();if(memoryMatched.size===16){const best=memoryBest();if(best===null||memoryTurns<best)save("droxion-memory-best-v2",memoryTurns);renderMemory();notify("memoryStatus","All pairs found in "+memoryTurns+" turns! Fantastic!")}}
-      else{memoryBusy=true;renderMemory();const token=memoryToken;setTimeout(()=>{if(token!==memoryToken)return;memoryOpen=[];memoryBusy=false;renderMemory()},850)}
-    }
-  }
-  $("memoryRestart").addEventListener("click",newMemory);
-
-  const panels={letter:"letterPanel",number:"numberPanel",snake:"snakePanel",groups:"groupsPanel",sudoku:"sudokuPanel",memory:"memoryPanel"};
-  document.querySelectorAll("[data-game]").forEach(b=>b.addEventListener("click",()=>{
-    active=b.dataset.game;
-    document.querySelectorAll("[data-game]").forEach(t=>t.setAttribute("aria-selected",String(t.dataset.game===active)));
-    Object.keys(panels).forEach(g=>$(panels[g]).classList.toggle("hidden",g!==active));
-    if(active!=="snake"&&playing&&!paused)togglePause();
-  }));
-  document.addEventListener("keydown",e=>{
-    if(e.ctrlKey||e.metaKey||e.altKey)return;
-    if(active==="snake"){const dir={ArrowUp:"up",ArrowDown:"down",ArrowLeft:"left",ArrowRight:"right",w:"up",s:"down",a:"left",d:"right"}[e.key];if(dir){e.preventDefault();setDirection(dir)}return}
-    if(active!=="letter"||["INPUT","TEXTAREA"].includes(document.activeElement.tagName))return;
-    if(e.key==="Enter"||e.key==="Backspace"){e.preventDefault();wordKey(e.key==="Enter"?"ENTER":"BACK")}
-    else if(/^[a-z]$/i.test(e.key)){wordKey(e.key.toUpperCase())}
-  });
-  document.addEventListener("visibilitychange",()=>{if(document.hidden&&playing&&!paused)togglePause()});
-  updateStats();updateSnakeBest();displayWord();displayCode();resetSnake();renderGroups();renderSudoku();newMemory();
+"use strict";
+const $=id=>document.getElementById(id);
+const rawAnswers="APPLE GRAPE PEACH LEMON BERRY MANGO MELON PLANT STONE CLOUD RIVER OCEAN BEACH LIGHT DREAM HEART MUSIC SMILE LAUGH BRAVE SHINE WATER EARTH STARS NIGHT HOUSE BREAD CHAIR TABLE TRAIN TRACK GREEN WHITE BLACK BROWN SWEET SUGAR HONEY PEARL FLAME BRICK GLASS PAPER BOOKS CLOCK HAPPY SMALL LARGE QUIET SMART FRESH CLEAR ROUND STORY WHEAT FLOUR PIZZA PASTA RANCH SHEEP HORSE MOUSE TIGER EAGLE ROBIN SPARK MAGIC BONUS SOLAR SPACE ORBIT COMET WORLD UNITY PEACE HUMAN VIVID FOCUS BRAIN THINK LOGIC SKILL SCORE LEVEL PIXEL POWER SPEED QUICK CHESS QUEEN ROYAL PARTY SHARE TRUST SOUND VOICE RADIO VIDEO DANCE ACTOR MOVIE STAGE POINT CLOSE ENTRY FIRST FINAL EARLY DAILY AGAIN BRING CARRY DRIVE ROADS CYCLE TRAIL MAPLE CEDAR BLOOM FIELD SUNNY WINDY RAINY SNOWY CHILL FROST CRISP JUICE FRUIT CLEAN FANCY HOTEL MONEY PRICE VALUE COINS SPEND SAVER BUILD WRITE LEARN TEACH STUDY CLASS CRAFT COLOR PAINT SHAPE LINES ANGLE EQUAL COUNT";
+const rawGuesses="ADIEU AISLE ALIEN ALLOY AMAZE ANIME ANGRY APART APPLY ARENA ARGUE ARISE ARROW ASIDE ASSET AUDIO AVOID AWAKE AWARD AWARE BACON BADGE BASIC BATCH BEARD BEAST BEGIN BELOW BENCH BIRTH BLADE BLAME BLANK BLAST BLEND BLESS BLIND BLOCK BLOOD BOARD BOAST BOOST BOOTH BOUND BOXER BRAID BRAKE BRASH BREAK BREED BRIEF BROAD BROIL BROOK BROOM BRUSH CABLE CANDY CANOE CARGO CARVE CATCH CAUSE CHAIN CHALK CHAMP CHARM CHART CHASE CHEAP CHECK CHEEK CHEER CHEST CHIEF CHILD CHIME CHOIR CHOSE CIVIC CLAIM CLASH CLASP CLASS CLEAN CLEAR CLICK CLIFF CLIMB CLING CLONE COACH COAST COCOA COLON COMIC CORAL COUCH COULD COURT COVER CRACK CRAFT CRANE CRASH CREAM CREEK CRIME CROSS CROWD CROWN CRUSH CURVE DAIRY DEALT DEBUT DECAY DECOR DELAY DELTA DEPTH DIGIT DINER DIRTY DISCO DITCH DIVER DOING DONOR DOUBT DOZEN DRAIN DRAMA DRAWN DRESS DRIFT DRILL DRINK DROVE DROWN DUSTY EAGER EIGHT ELBOW ELDER ELECT ELITE EMPTY ENEMY ENJOY ENTER EQUIP ERROR EVENT EVERY EXACT EXCEL EXTRA FAINT FAITH FALSE FAULT FAVOR FEAST FENCE FERRY FEVER FIBER FIERY FIGHT FILET FILTH FINAL FINCH FINER FLAIR FLAKE FLARE FLASH FLEET FLESH FLIGHT FLOAT FLOOD FLOOR FLORA FLOWN FOGGY FORCE FORGE FORTH FOUND FRAME FRANK FRAUD FREAK FREED FRONT FUDGE FUNNY GIANT GIVEN GLADE GLARE GLEAM GLOBE GLOOM GLORY GLOVE GOING GOOSE GORGE GRACE GRADE GRAIN GRAND GRANT GRASP GRASS GRAVE GREAT GREED GRIEF GRILL GRIND GROOM GROUP GROVE GROWN GUARD GUESS GUIDE HABIT HANDY HASTE HATCH HAUNT HAVEN HEAVY HELLO HENCE HERBS HIKER HOBBY HOLLY HONOR HOOPS HURRY IDEAL IMAGE IMPLY INDEX INNER INPUT IRONY ISSUE IVORY JELLY JEWEL JOINT JOKER JOLLY JUDGE JUICY KAYAK KNEEL KNIFE KNOCK KNOWN LABEL LABOR LANCE LAPSE LASER LATCH LATER LATTE LAYER LEAFY LEASE LEAST LEAVE LEGAL LEVER LILAC LIMIT LINEN LITER LIVER LOCAL LODGE LONER LOOSE LOVER LOWER LOYAL LUCKY LUNAR LUNCH LUNGE LYRIC MAJOR MAKER MANOR MARCH MATCH MAYBE MEDAL MEDIA MERCY MERIT METAL METER MIGHT MINOR MINUS MIRTH MODEL MONTH MOOSE MORAL MOTOR MOUNT MOURN MOUTH MOVER MURAL NASTY NAVAL NEEDS NERVE NEVER NEWER NICHE NINJA NOBLE NOISE NORTH NOTCH NOTED NOVEL NURSE NYLON OASIS OFFER OLIVE ONSET OPERA ORDER ORGAN OTHER OUNCE OUTER OWNER OXIDE PANEL PANIC PARKA PASTA PATCH PAUSE PEDAL PENNY PERCH PHASE PHONE PHOTO PIANO PICKY PILOT PINCH PITCH PLAIN PLANE PLANK PLATE PLAZA PLEAD PLEAT PLUCK PLUMB PLUME POEMS POLAR POUND PRIDE PRIME PRINT PRIOR PRIZE PROOF PROUD PROVE PULSE PUNCH PUPIL PURSE QUAIL QUAKE QUART QUERY QUEST QUICK QUILL QUILT QUITE QUOTE RADAR RAISE RALLY RANGE RAPID RATIO RAVEN REACH REACT READY REALM REBEL RECAP REIGN RELAX RELAY RENEW REPLY RESET RETRO RHYME RIDER RIDGE RIGHT RINSE RIPEN RIVAL ROBOT ROCKY ROGUE ROUGH ROUTE RULER RURAL SALAD SALON SALSA SALTY SANDY SAUCE SCALE SCARF SCENE SCENT SCOOP SCOPE SCOUT SCREW SENSE SERVE SEVEN SHADE SHAFT SHAKE SHALL SHAME SHAPE SHARK SHARP SHEER SHEET SHELF SHELL SHIFT SHIRT SHOCK SHORE SHORT SHOUT SHOWN SIGHT SILLY SINCE SIREN SKATE SKIRT SLEEP SLICE SLIDE SLOPE SMELL SMOKE SNAKE SOLID SOLVE SOUTH SPADE SPARE SPEAK SPICE SPIKE SPILL SPINE SPIRE SPLIT SPOKE SPOON SPORT SPRAY SQUAD STAFF STAIN STAKE STALE STAND STARE START STATE STEAK STEAL STEAM STEEL STEEP STEER STICK STILL STOCK STOMP STORE STORM STRAW STRIP STUCK STUFF STYLE SUITE SUPER SUSHI SWAMP SWEAR SWEAT SWEEP SWIFT SWING SWORD TAKEN TANGO TASTE TEAMS TEARS TEMPO TENSE THANK THEME THERE THICK THIEF THING THORN THOSE THREE THROW THUMB TIMER TIRED TITLE TOAST TODAY TOKEN TONIC TOOTH TOPIC TORCH TOTAL TOUCH TOUGH TOWER TRACE TRADE TREAT TREND TRIAL TRIBE TRICK TROOP TRUCE TRUCK TRULY TRUNK TRUTH TULIP TUTOR TWICE TWIST UNDER UNION UNITE UNTIL UPPER URBAN USAGE USUAL UTTER VALID VAPOR VAULT VEGAN VENOM VENUE VERGE VERSE VIGOR VIRAL VIRUS VISIT VITAL VOCAL VODKA VOTER WAGON WAIST WALTZ WASTE WATCH WAVES WEARY WEAVE WEDGE WEIGH WEIRD WHALE WHEEL WHERE WHICH WHILE WHISK WHOLE WHOSE WIDEN WIDER WIDOW WIDTH WILLY WINGS WIPER WIRED WISER WITCH WOMAN WORDS WORRY WORTH WOUND WRATH WRECK WRONG YACHT YIELD YOUNG YOUTH ZEBRA ZESTY SLATE STONE CRATE RATES TEARY STORE SPIRE CRISP STARE SOLAR CRONY CHURN CHORD CHUNK CHEAT CHESS CHILI CHIPS CHIRP CIVIL CLAMP CLOTH CLOVE CLOWN CLUMP COALS COATS CODES CONES COUGH COUNT CRABS CRAWL CREAK CREST CROAK CROPS CRUDE CRUEL CRUMB CUMIN CURRY DAUNT DENSE DESKS DICED DIETS DINGO DODGE DOLLY DOMES DOORS DOSES DOUGH DOWRY DRAKE DREAD DRIES DRONE DROPS DRUMS DRUNK DUNES DWELL DYING EASEL EATEN EATER EDGED EDGES EERIE EJECT ELATE ELOPE ELUDE EMAIL EMBER ENACT ENDED ENSUE ENTRY ENVOY EPOCH ERODE ESSAY ETHER ETHIC EVICT EXALT EXAMS EXERT EXILE EXIST EXPEL EXULT FABLE FACED FACES FACET FADED FAKED FAKES FARCE FARMS FATAL FAUNA FELON FEMUR FETCH FIEND FIFTY FILER FILMS FINDS FINED FIZZY FLACK FLAIL FLANK FLATS FLAWS FLICK FLING FLINT FLOSS FLOUR FLOWS FLUID FLUKE FLUNG FLUSH FOALS FOAMY FOILS FOLKS FONTS FOODS FOOLS FOURS FOXES FRAIL FRAYS FREER FRIAR FRIED FRIES FRILL FRISK FROGS FROST FROZE FULLY FUMES FURRY GAFFE GAILY GAMER GAMES GATES GAUGE GAUNT GAZES GEARS GENIE GENUS GHOST GIDDY GIFTS GIRLS GLAZE GLEAN GLIDE GLINT GLITZ GLOAT GLOWS GNOME GOALS GOATS GODLY GOLDS GOODY GOOFY GOOEY GORED GOWNS GRABS GRAMS GRATE GREET GRIME GRINS GRIPS GRITS GROAN GROSS GROWL GRUEL GUAVA GUILD GUILT GUISE GULCH GULLY GUMBO GUMMY GUSTO GUTSY HACKS HAILS HAIRS HAIRY HALOS HALTS HANDS HANKY HARES HARPS HATED HATES HAZEL HEADS HEADY HEARD HEARS HEATS HEELS HEFTY HEIRS HELMS HELPS HERDS HERON HIGHS HILLS HINTS HITCH HOIST HOLES HOMES HOMER HOPED HOPES HORNS HOSTS HOUND HOVER HULKS HUMID HUNKS HUNTS HURTS HYENA ICING IGLOO INBOX INFER INKED INLET INTRO IONIC IRATE IRKED ITEMS JACKS JAILS JAZZY JERKY JETTY JIFFY JOCKS JOINS JOKES JOUST JUMBO JUMPS JUMPY JUROR KARMA KEEPS KICKS KILNS KINDS KINGS KINKY KIOSK KITES KITTY KNEAD KNEES KNELT KNITS KNOBS KNOTS KUDOS LACED LACES LADEN LADLE LAGER LAKES LAMBS LANES LAPEL LARKS LASSO LAUGH LAWNS LEADS LEAKS LEANS LEAPT LEDGE LEECH LEEKS LEFTY LEMUR LENDS LICKS LIENS LIKES LIMBO LIMBS LIMES LINED LINES LINGO LINKS LIONS LISTS LIVED LIVES LOANS LOATH LOBBY LOCKS LOCUS LOFTY LOGIC LOGOS LOOMS LOOPS LORDS LOTUS LOVES LOWLY LUMPS LURCH LYING MACRO MAFIA MAGMA MAILS MAIZE MALTS MANES MANIC MARKS MARRY MASKS MASON MATED MATES MAXIM MAYOR MEALS MEANS MEANT MEATS MELTS MEMOS MENDS MENUS MERRY MESAS MESSY MILES MILKY MINCE MINES MINTS MIXED MIXER MOANS MOCHA MOIST MOLDS MOMMY MONKS MOONS MOPED MORNS MOTEL MOTIF MOVES MOWED MOWER MUCKY MUGGY MUNCH MUSKY MUSTY MUTED MYTHS NACHO NAILS NAIVE NAMES NAVEL NEARS NEATS NECKS NEEDY NEIGH NERDY NESTS NEWLY NICER NICKS NIFTY NINES NODES NOISY NOOKS NOOSE NORMS NOSES NOTES NUDGE NUKED NUTTY OAKEN OARED OBESE OCCUR ODDLY OILER OILED OINKS OMEGA ONION OPALS OPENS OPTED ORCAS OUGHT OVALS OVENS OWING OZONE PAGES PAINS PAIRS PALER PALMS PALSY PANSY PANTS PARKS PARSE PARTS PASTE PASTY PATHS PATIO PAVED PAVES PAWNS PEAKS PEARS PECKS PEEKS PEERS PENAL PENNE PERIL PERKY PETAL PETTY PHONY PICKS PIECE PIERS PIGGY PIKES PILED PILES PILLS PINGS PINKY PINTS PIOUS PIPED PIPER PIPES PIVOT PLANS PLAYS PLEAS PLODS PLOTS PLOWS PLUGS PLUMP PLUSH POACH POISE POKER POKES POLED POLES POLLS PONDS POOLS POPPY PORCH POSED POSER POSES POUCH POURS POUTS PRANK PRAYS PRESS PRIED PRIES PROMO PROSE PROWL PRUNE PUDGY PULLS PUMPS PUPPY PUREE PURGE QUACK QUALM QUASI QUEUE QUIPS QUOTA RACES RACKS RAGED RAGES RAILS RAINS RAKES RAMPS RANTS RASPY RATED RAVES RAZOR REAMS REAPS REARM REBAR REEDS REEFS REEKY REELS REHAB REINS REMIT RENTS RESTS RETRY RHINO RICED RICKS RIDES RIFLE RIFTS RIGID RINGS RINDS RISES RISEN RISER RITES ROAMS ROARS ROBES ROLLS ROPES ROSES ROTOR ROVED ROWER ROWDY RUGBY RUINS RULES RUNES RUNNY RUSES RUSTY SABLE SACKS SADLY SAFER SAGES SAILS SAINT SALTS SAVED SAVES SAXON SCALD SCALP SCANS SCARE SCARY SCOFF SCONE SCOOT SCOUR SCRAM SCRAP SCRUB SCUBA SEAMS SEATS SEEDS SEEMS SELLS SENDS SERUM SETUP SEVER SEWER SHACK SHAKY SHAMS SHANK SHAVE SHEDS SHEIK SHIES SHINY SHIPS SHOES SHOOT SHOPS SHORN SHOTS SHRED SHREW SHRUB SHUCK SHUNS SHUSH SICKS SIDES SIEGE SIGNS SILKS SILKY SILOS SINGS SINKS SITES SIXTY SIZED SIZES SKINS SKIPS SKULL SLABS SLACK SLAIN SLANT SLASH SLATS SLAYS SLEEK SLEPT SLICK SLIME SLIMY SLING SLINK SLIPS SLITS SLOTH SLUGS SLUMP SLUNG SLURP SMASH SMEAR SMELT SMIRK SMOGS SNACK SNAIL SNARE SNARL SNEAK SNEER SNIDE SNIFF SNIPS SNORE SNORT SNOUT SNOWS SOAKS SOAPS SOBER SOCKS SOILS SOLES SONGS SONIC SORES SORTS SOULS SOUPS SOWER SPANK SPANS SPASM SPECK SPECS SPELL SPENT SPICY SPIED SPIES SPITE SPOIL SPOOL SPORE SPOUT SPRIG SPUDS SPUNK SPURN SPURS STACK STALK STAMP STANK STARK STARS STASH STAYS STEAD STEIN STEPS STERN STIFF STILE STINK STINT STOIC STOOD STOOL STOOP STOPS STOUT STOVE STRAP STRAY STREP STREW STRUM STRUT STUBS STUMP STUNG STUNS SUAVE SUCKS SUDSY SULKY SUMAC SUNKS SURER SURGE SURLY SWANS SWARM SWATS SWAYS SWELL SWEPT SWIMS SWIRL SWORE SWORN SWUNG TACOS TACKS TACKY TAILS TALKS TALLY TALON TANKS TAPER TAPES TARDY TASKS TAXES TEARY TEASE TEDDY TELLS TENOR TENTS TERSE TESTS TEXTS THAWS THEFT THINE THINS THRUM TICKS TIDAL TIDES TILES TILTS TIMES TINGE TIPSY TITAN TOADS TOILS TOLLS TOMBS TOMES TONED TONES TOONS TOPAZ TORUS TOTES TOURS TOWED TOWEL TOWNS TOXIC TRAMS TRAPS TRASH TRAYS TREES TREKS TRIES TRIMS TRIPE TRIPS TROPE TROTS TROUT TRUED TRUES TUBES TUFTS TUNER TUNES TURNS TUSKS TWEAK TWEED TWINE TYPED TYPES ULTRA UMBRA UNBOX UNCLE UNCUT UNDID UNFED UNFIT UNIFY UNLIT UNMET UNMIX UNSET UNTIE UPEND UPSET URGED URGES USERS USHER USING VAGUE VALES VAPES VASES VENTS VERBS VESTS VEXED VIBES VIEWS VIGIL VINES VIPER VISAS VISOR VISTA VIXEN VOWED VOWEL WACKY WAGER WAGES WAILS WAITS WALKS WALLS WANTS WARMS WARNS WARTS WASPS WAXED WEANS WEARS WEEDS WEEKS WELLS WELTS WHACK WHIFF WHINE WHIPS WHIRL WHIST WILDS WILLS WIMPS WINCE WINDS WINES WIPES WISPY WIVES WOKEN WOMEN WOODS WOOLY WORDY WORKS WORMS WORSE WORST WOVEN WRAPS WREAK WRING WRIST YARDS YARNS YEARN YEARS YELLS YETIS YIKES YOLKS YOURS YUMMY ZEROS ZINGS ZIPPY ZONED ZONES ZOOMS";
+const answers=[...new Set(rawAnswers.trim().split(/\s+/).filter(w=>/^[A-Z]{5}$/.test(w)))];
+const dictionary=new Set([...answers,...rawGuesses.trim().split(/\s+/).filter(w=>/^[A-Z]{5}$/.test(w))]);
+const today=()=>new Date().toISOString().slice(0,10);
+const epoch=d=>Math.floor(Date.parse(d+"T00:00:00Z")/86400000);
+function hash(v){let x=(v^0x9e3779b9)>>>0;x=Math.imul(x^(x>>>16),0x7feb352d);x=Math.imul(x^(x>>>15),0x846ca68b);return(x^(x>>>16))>>>0}
+const dailyAnswer=d=>answers[hash(epoch(d)+923)%answers.length];
+const practiceAnswer=old=>{let n=Math.floor(Math.random()*answers.length);if(answers[n]===old)n=(n+1)%answers.length;return answers[n]};
+const read=(k,def)=>{try{const x=localStorage.getItem(k);return x===null?def:JSON.parse(x)}catch(e){return def}};
+const save=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}};
+const newDaily=()=>({word:dailyAnswer(day),guesses:[],done:false,won:false,hint:null});
+const newPractice=old=>({word:practiceAnswer(old),guesses:[],done:false,won:false,hint:null});
+const valid=(g,word)=>g&&typeof g.word==="string"&&/^[A-Z]{5}$/.test(g.word)&&(!word||g.word===word)&&Array.isArray(g.guesses)&&g.guesses.length<=6&&g.guesses.every(v=>typeof v==="string"&&/^[A-Z]{5}$/.test(v))&&typeof g.done==="boolean";
+const key=()=>mode==="daily"?"droxion-five-v4-"+day:"droxion-five-v4-practice";
+let day=today(),mode="daily",guessed="",working=false;
+let stats=read("droxion-five-v4-stats",{played:0,wins:0,current:0,best:0,lastWin:null,lastPlayed:null,dist:[0,0,0,0,0,0]});
+if(!stats||!Array.isArray(stats.dist))stats={played:0,wins:0,current:0,best:0,lastWin:null,lastPlayed:null,dist:[0,0,0,0,0,0]};
+let game=read(key(),null);if(!valid(game,dailyAnswer(day)))game=newDaily();
+const put=()=>save(key(),game);
+function score(guess,answer){
+const result=Array(5).fill("miss"),remain={};
+for(let i=0;i<5;i++){if(guess[i]===answer[i])result[i]="exact";else remain[answer[i]]=(remain[answer[i]]||0)+1}
+for(let i=0;i<5;i++)if(result[i]!=="exact"&&remain[guess[i]]>0){result[i]="present";remain[guess[i]]--}
+return result;
+}
+let toastTimer=null;
+function toast(s){const el=$("toast");el.textContent=s;el.hidden=false;clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.hidden=true,2200)}
+function label(s,win=false){$("status").textContent=s;$("status").className=win?"won":""}
+function streak(){return stats.lastWin&&epoch(day)-epoch(stats.lastWin)<=1?stats.current:0}
+function displayStats(){$("streak").textContent=streak()+" 🔥";$("wins").textContent=stats.wins;$("rate").textContent=stats.played?Math.round(stats.wins*100/stats.played)+"%":"0%"}
+function render(last=-1){
+$("daily").classList.toggle("active",mode==="daily");$("practice").classList.toggle("active",mode==="practice");
+$("daily").setAttribute("aria-pressed",String(mode==="daily"));$("practice").setAttribute("aria-pressed",String(mode==="practice"));
+$("gameTitle").textContent=mode==="daily"?"Today's puzzle":"Practice a new word";
+$("gameBadge").textContent=mode==="daily"?"PUZZLE #"+(epoch(day)-epoch("2026-01-01")+1):"UNLIMITED";
+$("share").hidden=!game.done;$("again").hidden=mode!=="practice";
+$("hint").disabled=game.done||game.guesses.length<3||!!game.hint;$("hint").textContent=game.hint?"✓ Hint used":"💡 Hint";
+const board=$("board");board.replaceChildren();
+for(let r=0;r<6;r++){const finished=game.guesses[r]||"",text=finished||(r===game.guesses.length&&!game.done?guessed:"");const marks=finished?score(finished,game.word):[];
+for(let c=0;c<5;c++){const tile=document.createElement("div");tile.className="tile";tile.textContent=text[c]||"";if(finished){tile.classList.add(marks[c]);if(r===last){tile.classList.add("flip");tile.style.animationDelay=(c*85)+"ms"}}else if(text[c])tile.classList.add("filled");tile.setAttribute("aria-label","Row "+(r+1)+", position "+(c+1)+": "+(text[c]||"blank")+(finished?", "+marks[c]:""));board.append(tile)}}
+const rank={miss:1,present:2,exact:3},keyColors={};
+for(const guess of game.guesses)score(guess,game.word).forEach((mark,i)=>{const l=guess[i];if(!keyColors[l]||rank[mark]>rank[keyColors[l]])keyColors[l]=mark});
+const keyboard=$("keyboard");keyboard.replaceChildren();
+for(const rowKeys of ["QWERTYUIOP","ASDFGHJKL","ENTER ZXCVBNM BACK"]){const row=document.createElement("div");row.className="keyrow";
+for(const k of rowKeys.includes(" ")?["ENTER",..."ZXCVBNM","BACK"]:[...rowKeys]){const b=document.createElement("button");b.type="button";b.className="key"+(k.length>1?" wide":"")+(keyColors[k]?" "+keyColors[k]:"");b.textContent=k==="BACK"?"⌫":k;b.setAttribute("aria-label",k==="BACK"?"Delete letter":k==="ENTER"?"Submit guess":k);b.addEventListener("click",()=>type(k));row.append(b)}keyboard.append(row)}
+const bar=$("progress");bar.replaceChildren();for(let r=0;r<6;r++){const b=document.createElement("i");b.className=r<game.guesses.length?"used":r===game.guesses.length&&!game.done?"current":"";bar.append(b)}
+if(game.done)label(game.won?"Amazing! You solved it in "+game.guesses.length+"/6"+(game.hint?" with a hint":"")+" 🎉":"The answer was "+game.word+". Try again tomorrow.",game.won);
+else label("Guess "+(game.guesses.length+1)+" of 6 · "+(guessed.length?guessed.length+"/5 letters":"Type a five-letter word."));
+displayStats();
+}
+function recordFinish(){
+if(mode!=="daily"||stats.lastPlayed===day)return;
+stats.played++;stats.lastPlayed=day;
+if(game.won){stats.wins++;stats.dist[game.guesses.length-1]++;stats.current=stats.lastWin&&epoch(day)-epoch(stats.lastWin)===1?stats.current+1:1;stats.best=Math.max(stats.best,stats.current);stats.lastWin=day}else stats.current=0;
+save("droxion-five-v4-stats",stats)
+}
+function type(k){
+if(working||game.done||!$("overlay").hidden)return;
+if(k==="BACK"){guessed=guessed.slice(0,-1);render();return}
+if(k==="ENTER"){if(guessed.length!==5){toast("Enter five letters");return}if(!dictionary.has(guessed)){toast("Not in our word list");return}
+const word=guessed;guessed="";game.guesses.push(word);if(word===game.word){game.done=true;game.won=true}else if(game.guesses.length===6){game.done=true;game.won=false}
+put();if(game.done)recordFinish();render(game.guesses.length-1);
+if(game.done){working=true;setTimeout(()=>{working=false;statsModal()},900)}return}
+if(/^[A-Z]$/.test(k)&&guessed.length<5){guessed+=k;render()}
+}
+function modeTo(next){if(working||mode===next)return;mode=next;guessed="";const existing=read(key(),null);game=valid(existing,mode==="daily"?dailyAnswer(day):null)?existing:(mode==="daily"?newDaily():newPractice(null));render()}
+function again(){if(mode!=="practice"||working)return;guessed="";game=newPractice(game.word);put();render()}
+function hint(){if(game.done||game.guesses.length<3||game.hint){toast("Hint available after three guesses");return}const previous=game.guesses.at(-1),index=[0,1,2,3,4].find(i=>previous[i]!==game.word[i]);if(index===undefined)return;game.hint={index,letter:game.word[index]};put();render();toast("Position "+(index+1)+" is "+game.word[index])}
+function shareText(){const tiles=game.guesses.map(g=>score(g,game.word).map(t=>t==="exact"?"🟩":t==="present"?"🟨":"⬛").join("")).join("\n");
+return "FIVE by Droxion · "+(mode==="daily"?"Daily #"+(epoch(day)-epoch("2026-01-01")+1):"Practice")+"\n"+(game.won?game.guesses.length+"/6":"X/6")+(game.hint?" 💡":"")+"\n"+tiles+"\n"+location.origin}
+function copy(txt){if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(txt).then(()=>toast("Results copied!")).catch(()=>legacy(txt));else legacy(txt)}
+function legacy(txt){const t=document.createElement("textarea");t.value=txt;t.style.position="fixed";t.style.opacity=0;document.body.append(t);t.select();let ok=false;try{ok=document.execCommand("copy")}catch(e){}t.remove();toast(ok?"Results copied!":"Copying is unavailable")}
+function share(){if(!game.done){toast("Finish your puzzle first");return}const txt=shareText();if(navigator.share)navigator.share({text:txt}).catch(()=>copy(txt));else copy(txt)}
+let lastFocus=null;
+function show(title,content){lastFocus=document.activeElement;$("modalTitle").textContent=title;$("modalBody").innerHTML=content;$("overlay").hidden=false;document.body.style.overflow="hidden";$("close").focus()}
+function close(){$("overlay").hidden=true;document.body.style.overflow="";if(lastFocus&&lastFocus.focus)lastFocus.focus()}
+function help(){show("How to play",
+'<p>Guess the hidden five-letter word in six tries. Each guess must be in our word list. Press Enter to submit.</p>'+
+'<div class="example"><span class="exact">C</span><span>R</span><span>A</span><span>N</span><span>E</span></div><p><b>Green:</b> C is in the correct spot.</p>'+
+'<div class="example"><span>S</span><span class="present">L</span><span>A</span><span>T</span><span>E</span></div><p><b>Yellow:</b> L is in the word, but in another spot.</p>'+
+'<div class="example"><span>P</span><span>R</span><span class="miss">I</span><span>D</span><span>E</span></div><p><b>Gray:</b> I is not in the word.</p>'+
+'<ul><li><b>Daily:</b> one shared word each UTC day.</li><li><b>Practice:</b> unlimited random rounds, without affecting your daily stats.</li><li><b>Hint:</b> one position is revealed after your third guess. Assisted wins are marked when shared.</li></ul>')}
+function statsModal(){const pct=stats.played?Math.round(stats.wins*100/stats.played):0,mx=Math.max(1,...stats.dist);
+let out='<p>Daily stats on this device. Practice rounds do not affect your streak.</p><div class="statgrid">'+[[stats.played,"Played"],[pct+"%","Win rate"],[streak(),"Streak"],[stats.best,"Best"]].map(p=>'<div class="statbox"><b>'+p[0]+'</b><small>'+p[1]+'</small></div>').join("")+'</div><h3>Guess distribution</h3>';
+out+=stats.dist.map((count,i)=>'<div class="distrow"><small>'+(i+1)+'</small><span class="distbar" style="width:'+Math.max(8,count/mx*87)+'%">'+count+'</span></div>').join("");
+if(game.done)out+='<div class="actions"><button class="btn primary" id="modalShare">Share your result</button></div>';
+show("Your statistics",out);const b=$("modalShare");if(b)b.addEventListener("click",share)}
+function settings(){show("Settings",'<p>Choose how your game looks.</p><label class="setting"><span>Dark appearance<small>Gentler colors for night play</small></span><input id="darkToggle" type="checkbox" '+(read("five-theme","light")==="dark"?"checked":"")+'></label><label class="setting"><span>High-contrast colors<small>Orange and blue clue colors</small></span><input id="contrastToggle" type="checkbox" '+(read("five-contrast",false)?"checked":"")+'></label><p>Your progress is only stored in this browser. Clearing site data removes it.</p>');
+$("darkToggle").addEventListener("change",e=>{const val=e.target.checked?"dark":"light";save("five-theme",val);document.documentElement.dataset.theme=val});
+$("contrastToggle").addEventListener("change",e=>{save("five-contrast",e.target.checked);document.documentElement.dataset.contrast=e.target.checked?"on":"off"})}
+function tick(){const now=new Date(),n=new Date(Date.UTC(now.getUTCFullYear(),now.getUTCMonth(),now.getUTCDate()+1)),ms=Math.max(0,n-now);
+$("countdown").textContent=[Math.floor(ms/3600000),Math.floor(ms%3600000/60000),Math.floor(ms%60000/1000)].map(n=>String(n).padStart(2,"0")).join(":");
+if(today()!==day){day=today();$("headerDate").textContent=new Date().toLocaleDateString(undefined,{month:"short",day:"numeric",year:"numeric",timeZone:"UTC"});if(mode==="daily"){const old=read(key(),null);game=valid(old,dailyAnswer(day))?old:newDaily();guessed="";render()}else displayStats()}
+}
+$("help").addEventListener("click",help);$("stats").addEventListener("click",statsModal);$("settings").addEventListener("click",settings);
+$("close").addEventListener("click",close);$("overlay").addEventListener("click",e=>{if(e.target===$("overlay"))close()});
+$("daily").addEventListener("click",()=>modeTo("daily"));$("practice").addEventListener("click",()=>modeTo("practice"));$("hint").addEventListener("click",hint);$("share").addEventListener("click",share);$("again").addEventListener("click",again);
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!$("overlay").hidden){close();return}if(!$("overlay").hidden||e.ctrlKey||e.metaKey||e.altKey||e.repeat)return;
+const tag=document.activeElement&&document.activeElement.tagName;if(tag==="INPUT"||tag==="TEXTAREA")return;
+if((e.key==="Enter"||e.key==="Backspace")&&!(e.key==="Enter"&&tag==="BUTTON")){e.preventDefault();type(e.key==="Enter"?"ENTER":"BACK")}
+else if(/^[a-z]$/i.test(e.key)&&tag!=="BUTTON")type(e.key.toUpperCase())});
+document.documentElement.dataset.theme=read("five-theme","light");document.documentElement.dataset.contrast=read("five-contrast",false)?"on":"off";
+$("headerDate").textContent=new Date().toLocaleDateString(undefined,{month:"short",day:"numeric",year:"numeric",timeZone:"UTC"});
+render();tick();setInterval(tick,1000);
+if(!read("five-intro-v4",false)){save("five-intro-v4",true);help()}
 })();
 </script>
-</body>
-</html>
+</body></html>
