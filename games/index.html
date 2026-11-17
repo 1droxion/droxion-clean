@@ -3,10 +3,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="theme-color" content="#101322">
-  <meta name="description" content="Three free, original browser games. Solve a fresh word and number puzzle every day, or play Snake Rush anytime.">
+  <meta name="theme-color" content="#f8f8f6">
+  <meta name="description" content="Six free, original browser games. Play a fresh daily word puzzle, group words, solve Sudoku, match pairs, or play Snake.">
   <meta name="robots" content="noindex,nofollow">
-  <title>Droxion Play — Your daily brain break</title>
+  <title>Droxion Play — Daily Words, Puzzles & More</title>
   <style>
     :root{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#f7f8ff;background:#0d1020;--bg:#0d1020;--panel:#171a2d;--edge:#30354f;--muted:#adb5cf;--aqua:#8cf5d2;--yellow:#f7c76d;--red:#f08e9d;color-scheme:dark}
     *{box-sizing:border-box}
@@ -67,23 +67,93 @@
     .visually-hidden{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
     button:focus-visible,input:focus-visible{outline:3px solid var(--yellow);outline-offset:3px}
     @media(max-width:760px){.wrap{padding:19px 14px 55px}header{margin-bottom:27px}h1{letter-spacing:-1.5px}.arena{grid-template-columns:1fr}.games{gap:8px}.game-tab{padding:11px;min-height:95px;flex-direction:column;text-align:center;gap:8px}.game-icon{width:38px;height:38px;font-size:19px;border-radius:11px}.game-title{font-size:12px}.game-sub{font-size:10px;margin-top:2px}.panel{border-radius:16px}.topright{font-size:11px}.key{min-height:42px}.keyrow{gap:3px}.keyboard{gap:5px}.stats{gap:6px}.stat{font-size:11px}}
+  
+    /* V2: bright, editorial puzzle design inspired by the simplicity of daily word games */
+    :root{--bg:#f8f8f6;--panel:#fff;--edge:#deded9;--muted:#66696a;--aqua:#538d4e;--yellow:#b59f3b;--red:#c54d54;color:#202124;background:#f8f8f6;color-scheme:light}
+    body{background:#f8f8f6;color:#202124}
+    .wrap{max-width:1090px}
+    header{margin-bottom:39px;padding:0 0 18px;border-bottom:1px solid #deded8}
+    .brand{font-family:Georgia,"Times New Roman",serif;font-size:26px;letter-spacing:-1.25px;color:#202124}
+    .brandmark{background:#538d4e;color:#fff;box-shadow:none;border-radius:9px;font-family:system-ui}
+    .brand span[style]{color:#538d4e!important}
+    .topright{color:#676767}
+    .pill{background:#ecf4e9;color:#367233;border-color:#bad7b5;font-weight:750}
+    .eyebrow{color:#688365;letter-spacing:2px}
+    h1{font-family:Georgia,"Times New Roman",serif;font-size:clamp(34px,5.3vw,58px);letter-spacing:-1.8px;line-height:1.13;margin:10px 0 14px}
+    h1 span{color:#538d4e}
+    .lead{color:#626668;font-size:15px}
+    .stats{margin-top:20px}.stat{background:#fff;border:1px solid #e0e0dc;color:#626568}.stat b{color:#457d43}
+    .games{grid-template-columns:repeat(3,minmax(0,1fr));gap:11px;margin-top:28px}
+    .game-tab{background:#fff;color:#242526;border-color:#e1e1dd;border-radius:13px;min-height:86px;padding:13px;box-shadow:0 2px 5px #11111104}
+    .game-tab:hover{background:#fafbf8;border-color:#9bb899}
+    .game-tab[aria-selected=true]{background:#eef6ec;color:#27562c;border-color:#538d4e;box-shadow:inset 0 0 0 1px #538d4e}
+    .game-icon{background:#f0f1ef;border-radius:10px;width:46px;height:46px;font-size:23px}
+    .game-tab[aria-selected=true] .game-icon{background:#dbebd6}
+    .game-title{font-size:14px}.game-sub{color:#787c80}
+    .panel{background:#fff;border-color:#e2e2de;border-radius:16px;box-shadow:none}
+    h2{font-family:Georgia,"Times New Roman",serif;color:#242524}
+    h3{color:#242524}.subtext{color:#686c6e}
+    .soft-badge{color:#507b42;background:#edf5e9;border:1px solid #d2e6ce}
+    .status{background:#f7f7f4;border:1px solid #e0e1db;color:#424543}
+    .tile{border:2px solid #d3d6da;border-radius:0;color:#202124;background:#fff}
+    .tile.filled{border-color:#808588}
+    .tile.exact{background:#538d4e;border-color:#538d4e;color:#fff}
+    .tile.present{background:#b59f3b;border-color:#b59f3b;color:#fff}
+    .tile.miss{background:#787c7e;border-color:#787c7e;color:#fff}
+    .keyboard{max-width:500px}.key{background:#d3d6da;color:#202124;border-radius:4px;min-height:50px}
+    .key.exact{background:#538d4e;color:#fff}.key.present{background:#b59f3b;color:#fff}.key.miss{background:#787c7e;color:#fff}
+    .side-card{background:#f8f8f6;border:1px solid #e7e7e2}
+    .side-card p,.side-card .list{color:#626568}.side-card b{color:#333}
+    .legend span{color:#626568}
+    .primary{background:#538d4e;color:#fff}
+    .secondary{background:#fff;color:#353a35;border:1px solid #cdd0c8}
+    .code-input{background:#fff;border-color:#a5aba5;color:#202124}
+    .hist-row{background:#f8f8f6;border-color:#e0e0da}.hist-help{color:#686c6e}
+    .snake-info{color:#656a65}
+    .pad button{background:#f4f5f0;color:#343a35;border-color:#d0d4cc}
+    .footnote{border-color:#dadbd5;color:#777c78}
+    .group-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin:22px 0}
+    .group-tile{min-height:77px;background:#f1f1ed;border:2px solid transparent;border-radius:10px;font-size:clamp(11px,1.5vw,14px);font-weight:850;letter-spacing:.2px;color:#222;padding:7px;word-break:break-word}
+    .group-tile.selected{background:#dfecd9;border-color:#538d4e}.group-tile:disabled{opacity:.48;cursor:default}
+    .solved-group{padding:14px;margin:9px 0;background:#e2efdf;border:1px solid #a9cba6;border-radius:11px;text-align:center}
+    .solved-group strong{display:block;font-weight:850;color:#2f6331;margin-bottom:4px}
+    .solved-group span{font-size:12px;color:#4e6b4e}
+    .attempts{color:#757b76;font-size:12px;text-align:center}
+    .sudoku-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));width:min(100%,330px);margin:22px auto;border:3px solid #353535;background:#333}
+    .sudoku-cell{aspect-ratio:1;min-width:0;min-height:0;border:1px solid #b8bab8;border-radius:0;background:#fff;color:#222;text-align:center;font-size:clamp(24px,5vw,33px);font-weight:700}
+    .sudoku-cell:nth-child(2),.sudoku-cell:nth-child(6),.sudoku-cell:nth-child(10),.sudoku-cell:nth-child(14){border-right:3px solid #333}
+    .sudoku-cell:nth-child(n+5):nth-child(-n+8){border-bottom:3px solid #333}
+    .sudoku-cell.fixed{background:#e9ede6;color:#465147}
+    .sudoku-cell.wrong{background:#ffe2e1;color:#a12b30}
+    .memory-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;width:min(100%,370px);margin:25px auto}
+    .memory-tile{aspect-ratio:1;border:1px solid #cfd8ce;border-radius:11px;background:#e8f0e4;color:#538d4e;font-size:clamp(27px,6vw,41px);font-weight:900;transition:transform .16s,background .16s}
+    .memory-tile.revealed{background:#fff;border-color:#9fb69c;transform:scale(.98)}.memory-tile.matched{background:#e3f1df;border-color:#81b17c}
+    .memory-stats{text-align:center;color:#606761;font-size:14px;font-weight:700}
+    .badge-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+    @media(max-width:760px){header{margin-bottom:25px}.games{grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}.game-tab{padding:10px 5px;min-height:105px}.game-icon{height:35px;width:35px;font-size:18px}.game-title{font-size:12px}.game-sub{font-size:10px}.group-grid{gap:6px}.group-tile{min-height:60px;font-size:11px}.panel{padding:16px}.memory-grid{gap:7px}.topright{font-size:11px}}
+    @media(max-width:430px){.games{grid-template-columns:repeat(3,minmax(0,1fr))}.game-tab{gap:6px}.game-icon{font-size:17px}.game-sub{line-height:1.25}}
+
   </style>
 </head>
 <body>
 <div class="wrap">
   <header>
     <a class="brand" href="/" aria-label="Droxion Play home"><span class="brandmark">D</span>DROXION<span style="color:var(--aqua)">PLAY</span></a>
-    <div class="topright"><span id="todayLabel">Today's games</span><span class="pill">Free to play</span></div>
+    <div class="topright"><span id="todayLabel">Today's games</span><span class="pill">100% free preview</span></div>
   </header>
   <main>
-    <div class="eyebrow">Think. Solve. Repeat.</div>
-    <h1>Your daily <span>brain break.</span></h1>
-    <p class="lead">Three original browser games. A fresh daily word puzzle, a number-code challenge, and a classic arcade break. No sign-up. No download.</p>
+    <div class="eyebrow">A little fun, every day</div>
+    <h1>A fresh puzzle.<br><span>Every day.</span></h1>
+    <p class="lead">Play six simple, original games. Solve today’s word and logic challenges or take a quick arcade break. Free to play, no signup needed.</p>
     <div class="stats"><div class="stat"><b id="streak">0</b> day word streak</div><div class="stat"><b id="wins">0</b> word wins</div><div class="stat"><b id="snakeHigh">0</b> snake high score</div></div>
     <nav class="games" role="tablist" aria-label="Choose game">
       <button class="game-tab" role="tab" aria-selected="true" aria-controls="letterPanel" id="letterTab" data-game="letter"><span class="game-icon" aria-hidden="true">🔤</span><span><span class="game-title">Letter Five</span><span class="game-sub">Daily word challenge</span></span></button>
       <button class="game-tab" role="tab" aria-selected="false" aria-controls="numberPanel" id="numberTab" data-game="number"><span class="game-icon" aria-hidden="true">🔢</span><span><span class="game-title">Code Four</span><span class="game-sub">Daily logic challenge</span></span></button>
       <button class="game-tab" role="tab" aria-selected="false" aria-controls="snakePanel" id="snakeTab" data-game="snake"><span class="game-icon" aria-hidden="true">🐍</span><span><span class="game-title">Snake Rush</span><span class="game-sub">Play as long as you like</span></span></button>
+
+      <button class="game-tab" role="tab" aria-selected="false" aria-controls="groupsPanel" id="groupsTab" data-game="groups"><span class="game-icon" aria-hidden="true">🧩</span><span><span class="game-title">Word Groups</span><span class="game-sub">Daily word sets</span></span></button>
+      <button class="game-tab" role="tab" aria-selected="false" aria-controls="sudokuPanel" id="sudokuTab" data-game="sudoku"><span class="game-icon" aria-hidden="true">🔲</span><span><span class="game-title">Mini Sudoku</span><span class="game-sub">Daily number grid</span></span></button>
+      <button class="game-tab" role="tab" aria-selected="false" aria-controls="memoryPanel" id="memoryTab" data-game="memory"><span class="game-icon" aria-hidden="true">🎴</span><span><span class="game-title">Memory Match</span><span class="game-sub">Quick brain break</span></span></button>
     </nav>
     <section class="arena" id="letterPanel" role="tabpanel" aria-labelledby="letterTab">
       <div class="panel">
@@ -97,7 +167,7 @@
       <aside class="panel">
         <div class="side-card"><h3>How to play</h3><p>Guess any five-letter word, then press Enter. Tiles change colors to show how close your guess is.</p><div class="legend"><span><i style="background:#32896d"></i>Right spot</span><span><i style="background:#a07937"></i>Wrong spot</span><span><i style="background:#424961"></i>Not in word</span></div><p>A letter can appear more than once. Your progress stays on this device.</p></div>
         <div class="side-card"><h3>Why come back?</h3><p>One fresh puzzle every day, a local win streak, and a result you can share without revealing the answer.</p></div>
-        <div class="side-card"><h3>Support the games</h3><p>Every game is free during this preview. Advertising and optional upgrades are not enabled yet.</p></div>
+        <div class="side-card"><h3>Support the games</h3><p>All six games are free during the preview. No ads, paid accounts, or checkouts yet.</p></div>
       </aside>
     </section>
     <section class="arena hidden" id="numberPanel" role="tabpanel" aria-labelledby="numberTab">
@@ -124,8 +194,42 @@
       </div>
       <aside class="panel"><div class="side-card"><h3>Beat your best</h3><p>Snake Rush is always available, not just once a day. Your best score stays saved on this device.</p></div><div class="side-card"><h3>Controls</h3><p>Arrow keys or WASD on desktop. Tap the arrow buttons on your phone. Pause if you need a break.</p></div></aside>
     </section>
+
+    <section class="arena hidden" id="groupsPanel" role="tabpanel" aria-labelledby="groupsTab">
+      <div class="panel">
+        <div class="section-title"><h2>Word Groups</h2><span class="soft-badge">DAILY PUZZLE</span></div>
+        <p class="subtext">Find four groups of four related words. Select four words that belong together.</p>
+        <div class="status" id="groupsStatus" role="status" aria-live="polite">Select four connected words.</div>
+        <div id="solvedGroups" aria-label="Solved groups"></div>
+        <div class="group-grid" id="groupsGrid" aria-label="Word group choices"></div>
+        <div class="attempts" id="groupsAttempts"></div>
+        <div class="actionrow"><button class="secondary" id="groupsClear">Deselect</button><button class="primary" id="groupsSubmit">Submit group</button><button class="secondary" id="groupsShare">Share</button></div>
+      </div>
+      <aside class="panel"><div class="side-card"><h3>Find the connection</h3><p>Each of the 16 words belongs to exactly one of four categories. Pick the four words you think share something in common.</p></div><div class="side-card"><h3>Daily challenge</h3><p>There is one fresh puzzle every day. You have four mistakes to complete all the categories. Your progress is saved on your device.</p></div></aside>
+    </section>
+    <section class="arena hidden" id="sudokuPanel" role="tabpanel" aria-labelledby="sudokuTab">
+      <div class="panel">
+        <div class="section-title"><h2>Mini Sudoku</h2><span class="soft-badge">DAILY PUZZLE</span></div>
+        <p class="subtext">Fill the 4×4 grid using 1, 2, 3, 4. Each row, column and 2×2 box needs each digit once.</p>
+        <div class="status" id="sudokuStatus" role="status" aria-live="polite">Complete the empty squares.</div>
+        <div class="sudoku-grid" id="sudokuGrid" aria-label="Four by four Sudoku grid"></div>
+        <div class="actionrow"><button class="primary" id="sudokuCheck">Check solution</button><button class="secondary" id="sudokuClear">Clear entries</button><button class="secondary" id="sudokuShare">Share</button></div>
+      </div>
+      <aside class="panel"><div class="side-card"><h3>How to play</h3><p>Put the numbers 1–4 into every empty square. Avoid repeating numbers in any row, column or 2×2 section.</p></div><div class="side-card"><h3>Small but satisfying</h3><p>Mini Sudoku is a quick logic puzzle designed for phones and desktops. A new board is generated each day.</p></div></aside>
+    </section>
+    <section class="arena hidden" id="memoryPanel" role="tabpanel" aria-labelledby="memoryTab">
+      <div class="panel">
+        <div class="section-title"><h2>Memory Match</h2><span class="soft-badge">PLAY ANYTIME</span></div>
+        <p class="subtext">Flip two cards at a time. Find all eight matching pairs using as few turns as possible.</p>
+        <div class="status" id="memoryStatus" role="status" aria-live="polite">Tap any card to start.</div>
+        <div class="memory-stats"><span id="memoryMoves">0</span> turns · <span id="memoryPairs">0</span>/8 pairs · Best: <span id="memoryBest">—</span></div>
+        <div class="memory-grid" id="memoryGrid" aria-label="Memory game cards"></div>
+        <div class="actionrow"><button class="primary" id="memoryRestart">New game</button></div>
+      </div>
+      <aside class="panel"><div class="side-card"><h3>Train your memory</h3><p>Remember where each symbol appears and flip its partner. Every new game reshuffles the cards.</p></div><div class="side-card"><h3>No daily limit</h3><p>Play as often as you want. Your personal best is stored in this browser.</p></div></aside>
+    </section>
   </main>
-  <footer class="footnote"><span>© <span id="year"></span> Droxion Play · Original browser games.</span><span>No account, tracking, ads, or payments in this preview. Scores are saved only in your browser. New daily puzzles reset at 00:00 UTC.</span></footer>
+  <footer class="footnote"><span>© <span id="year"></span> Droxion Play · Original daily puzzles and arcade games.</span><span>No account, tracking, ads, or payments in this preview. Scores are saved only in your browser. New daily puzzles reset at 00:00 UTC.</span></footer>
 </div>
 <script>
 (function(){
@@ -262,7 +366,124 @@
   function updateSnakeBest(){const high=read("droxion-snake-best-v1",0);$("snakeHigh").textContent=String(high);$("snakeBest").textContent=String(high)}
   $("snakeStart").addEventListener("click",startSnake);$("snakePause").addEventListener("click",togglePause);
   document.querySelectorAll("[data-dir]").forEach(b=>b.addEventListener("click",()=>setDirection(b.dataset.dir)));
-  const panels={letter:"letterPanel",number:"numberPanel",snake:"snakePanel"};
+  
+  /* Daily Word Groups — original curated categories */
+  const GROUP_PACKS=[
+    [{name:"Fruit",words:["APRICOT","PAPAYA","KIWI","PLUM"]},{name:"Weather",words:["CLOUD","RAIN","WIND","SNOW"]},{name:"Music",words:["PIANO","DRUM","HARP","FLUTE"]},{name:"Movement",words:["SKIP","JOG","HOP","DANCE"]}],
+    [{name:"Time",words:["MINUTE","HOUR","DAY","WEEK"]},{name:"Ocean",words:["CORAL","REEF","TIDE","WAVE"]},{name:"Writing",words:["PEN","PENCIL","INK","PAPER"]},{name:"Tools",words:["HAMMER","SAW","WRENCH","DRILL"]}],
+    [{name:"Sports",words:["TENNIS","SOCCER","GOLF","RUGBY"]},{name:"Colors",words:["AZURE","IVORY","SCARLET","VIOLET"]},{name:"Kitchen",words:["OVEN","STOVE","SINK","PAN"]},{name:"Birds",words:["ROBIN","EAGLE","HERON","FINCH"]}],
+    [{name:"Computers",words:["MOUSE","KEYBOARD","SCREEN","CURSOR"]},{name:"Space",words:["PLANET","COMET","ORBIT","ASTEROID"]},{name:"Plants",words:["ROSE","TULIP","FERN","IVY"]},{name:"Travel",words:["TICKET","PASSPORT","SUITCASE","MAP"]}],
+    [{name:"Weather",words:["FOG","HAIL","SLEET","THUNDER"]},{name:"Drinks",words:["TEA","COFFEE","JUICE","WATER"]},{name:"Materials",words:["STEEL","WOOD","GLASS","COTTON"]},{name:"Art",words:["CANVAS","BRUSH","EASEL","PALETTE"]}],
+    [{name:"Shapes",words:["CIRCLE","SQUARE","TRIANGLE","OVAL"]},{name:"Animals",words:["OTTER","FOX","PANDA","ZEBRA"]},{name:"House parts",words:["WINDOW","DOOR","ROOF","FLOOR"]},{name:"Movement",words:["RUN","WALK","CRAWL","CLIMB"]}]
+  ];
+  const gp=GROUP_PACKS[dayIndex(411,GROUP_PACKS.length)];
+  const gkey="droxion-groups-v2-"+DAY,groupData=read(gkey,{solved:[],mistakes:0,history:[]});
+  if(!Array.isArray(groupData.solved))groupData.solved=[];
+  if(!Array.isArray(groupData.history))groupData.history=[];
+  let groupSelection=[];
+  function seededShuffle(items,salt){const arr=items.slice(),random=seed(dateNumber+salt);for(let i=arr.length-1;i>0;i--){const j=Math.floor(random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]]}return arr}
+  const groupOrder=seededShuffle(gp.flatMap((g,i)=>g.words.map(word=>({word,group:i}))),602);
+  function groupsOver(){return groupData.solved.length===4||groupData.mistakes>=4}
+  function renderGroups(){
+    const solved=$("solvedGroups");solved.replaceChildren();
+    groupData.solved.forEach(idx=>{const row=document.createElement("div");row.className="solved-group";const title=document.createElement("strong");title.textContent=gp[idx].name;const words=document.createElement("span");words.textContent=gp[idx].words.join(" · ");row.append(title,words);solved.append(row)});
+    const grid=$("groupsGrid");grid.replaceChildren();
+    groupOrder.filter(item=>!groupData.solved.includes(item.group)).forEach(item=>{
+      const button=document.createElement("button");button.className="group-tile"+(groupSelection.includes(item.word)?" selected":"");button.textContent=item.word;button.type="button";button.disabled=groupsOver();button.setAttribute("aria-pressed",String(groupSelection.includes(item.word)));
+      button.addEventListener("click",()=>{if(groupSelection.includes(item.word))groupSelection=groupSelection.filter(w=>w!==item.word);else if(groupSelection.length<4)groupSelection.push(item.word);renderGroups()});grid.append(button)
+    });
+    $("groupsAttempts").textContent=groupData.mistakes+" of 4 mistakes used · "+groupData.solved.length+" of 4 groups found";
+    $("groupsSubmit").disabled=groupsOver()||groupSelection.length!==4;$("groupsClear").disabled=groupsOver()||groupSelection.length===0;
+    if(groupsOver())notify("groupsStatus",groupData.solved.length===4?"Perfect! All four groups solved.":"Today's puzzle is finished. Come back tomorrow.");
+    else notify("groupsStatus",groupSelection.length?groupSelection.length+" of 4 words selected":"Select four words that share a category.");
+  }
+  $("groupsClear").addEventListener("click",()=>{groupSelection=[];renderGroups()});
+  $("groupsSubmit").addEventListener("click",()=>{
+    if(groupsOver()||groupSelection.length!==4)return;
+    const index=gp.findIndex(g=>g.words.every(w=>groupSelection.includes(w)));
+    if(index>=0&&!groupData.solved.includes(index)){groupData.solved.push(index);groupData.history.push("✓");notify("groupsStatus","Group found: "+gp[index].name)}
+    else{groupData.mistakes++;groupData.history.push("×")}
+    groupSelection=[];save(gkey,groupData);renderGroups()
+  });
+  $("groupsShare").addEventListener("click",()=>{if(groupData.history.length===0){notify("groupsStatus","Try your first group before sharing.");return}share("Droxion Play · Word Groups · "+DAY+"\n"+groupData.solved.length+"/4 groups · "+groupData.mistakes+" mistakes\n"+groupData.history.join(" ")+"\n"+location.origin,"groupsStatus")});
+
+  /* Mini Sudoku — seeded daily, uniquely solvable 4×4 puzzles */
+  const sudokuRandom=seed(dateNumber+731),numberOrder=[1,2,3,4];
+  for(let i=3;i>0;i--){const j=Math.floor(sudokuRandom()*(i+1));[numberOrder[i],numberOrder[j]]=[numberOrder[j],numberOrder[i]]}
+  const sudokuBase=[1,2,3,4,3,4,1,2,2,1,4,3,4,3,2,1],sudokuSolution=sudokuBase.map(v=>numberOrder[v-1]);
+  function countSolutions(board,cap){
+    let count=0;
+    function walk(){
+      if(count>=cap)return;
+      const idx=board.indexOf(0);
+      if(idx<0){count++;return}
+      const row=Math.floor(idx/4),col=idx%4;
+      for(let d=1;d<=4;d++){
+        let allowed=true;
+        for(let i=0;i<4;i++)if(board[row*4+i]===d||board[i*4+col]===d)allowed=false;
+        for(let r=2*Math.floor(row/2);r<2*Math.floor(row/2)+2;r++)for(let c=2*Math.floor(col/2);c<2*Math.floor(col/2)+2;c++)if(board[r*4+c]===d)allowed=false;
+        if(allowed){board[idx]=d;walk();board[idx]=0;if(count>=cap)return}
+      }
+    }
+    walk();return count;
+  }
+  const sudokuPuzzle=sudokuSolution.slice(),blankPositions=seededShuffle(Array.from({length:16},(_,i)=>i),846);
+  let blanks=0;
+  for(const pos of blankPositions){const old=sudokuPuzzle[pos];sudokuPuzzle[pos]=0;if(countSolutions(sudokuPuzzle.slice(),2)!==1){sudokuPuzzle[pos]=old}else blanks++;if(blanks>=8)break}
+  const skey="droxion-sudoku-v2-"+DAY,sudokuData=read(skey,{entries:{},won:false});
+  if(!sudokuData.entries||typeof sudokuData.entries!=="object")sudokuData.entries={};
+  function renderSudoku(){
+    const grid=$("sudokuGrid");grid.replaceChildren();
+    for(let i=0;i<16;i++){
+      const cell=document.createElement("input");cell.className="sudoku-cell"+(sudokuPuzzle[i]?" fixed":"");cell.type="text";cell.setAttribute("inputmode","numeric");cell.setAttribute("maxlength","1");cell.setAttribute("aria-label","Row "+(Math.floor(i/4)+1)+", column "+(i%4+1));
+      cell.value=String(sudokuPuzzle[i]||sudokuData.entries[i]||"");
+      cell.readOnly=!!sudokuPuzzle[i]||!!sudokuData.won;cell.autocomplete="off";
+      if(!sudokuPuzzle[i])cell.addEventListener("input",()=>{
+        const value=cell.value.replace(/[^1-4]/g,"").slice(-1);cell.value=value;cell.classList.remove("wrong");if(value)sudokuData.entries[i]=value;else delete sudokuData.entries[i];save(skey,sudokuData)
+      });
+      grid.append(cell);
+    }
+    $("sudokuCheck").disabled=sudokuData.won;$("sudokuClear").disabled=sudokuData.won;
+    notify("sudokuStatus",sudokuData.won?"Perfect! Today's Sudoku is complete.":"Fill each row, column and 2×2 box with 1–4.");
+  }
+  $("sudokuCheck").addEventListener("click",()=>{
+    if(sudokuData.won)return;let errors=0,missing=0;
+    [...$("sudokuGrid").children].forEach((cell,i)=>{if(sudokuPuzzle[i])return;if(!cell.value)missing++;else if(Number(cell.value)!==sudokuSolution[i]){cell.classList.add("wrong");errors++}else cell.classList.remove("wrong")});
+    if(missing)notify("sudokuStatus",missing+" squares still empty. Keep going!");
+    else if(errors)notify("sudokuStatus",errors+" square"+(errors===1?" needs":"s need")+" another look.");
+    else{sudokuData.won=true;save(skey,sudokuData);renderSudoku()}
+  });
+  $("sudokuClear").addEventListener("click",()=>{if(sudokuData.won)return;sudokuData.entries={};save(skey,sudokuData);renderSudoku()});
+  $("sudokuShare").addEventListener("click",()=>{share("Droxion Play · Mini Sudoku · "+DAY+"\n"+(sudokuData.won?"✅ Completed!":"Still solving…")+"\n"+location.origin,"sudokuStatus")});
+
+  /* Memory Match — accessible, freely replayable card matching */
+  const symbols=["🍋","🌸","🐙","🚀","🎸","🍩","🦋","🌙"];
+  let memoryCards=[],memoryOpen=[],memoryMatched=new Set(),memoryTurns=0,memoryBusy=false,memoryToken=0;
+  function memoryBest(){return read("droxion-memory-best-v2",null)}
+  function renderMemory(){
+    const grid=$("memoryGrid");grid.replaceChildren();
+    memoryCards.forEach((emoji,i)=>{
+      const open=memoryOpen.includes(i)||memoryMatched.has(i),matched=memoryMatched.has(i);
+      const button=document.createElement("button");button.type="button";button.className="memory-tile"+(open?" revealed":"")+(matched?" matched":"");
+      button.textContent=open?emoji:"?";button.setAttribute("aria-label",open?"Card "+(i+1)+": "+emoji:"Card "+(i+1)+": face down");button.disabled=memoryBusy||matched;button.addEventListener("click",()=>flipMemory(i));grid.append(button)
+    });
+    $("memoryMoves").textContent=String(memoryTurns);$("memoryPairs").textContent=String(memoryMatched.size/2);$("memoryBest").textContent=memoryBest()??"—";
+  }
+  function newMemory(){
+    memoryToken++;memoryCards=seededShuffle(symbols.concat(symbols),Math.floor(Math.random()*2000000000));memoryOpen=[];memoryMatched=new Set();memoryTurns=0;memoryBusy=false;renderMemory();notify("memoryStatus","Find all eight matching pairs.");
+  }
+  function flipMemory(i){
+    if(memoryBusy||memoryMatched.has(i)||memoryOpen.includes(i)||memoryOpen.length>=2)return;
+    memoryOpen.push(i);renderMemory();
+    if(memoryOpen.length===2){
+      memoryTurns++;const a=memoryOpen[0],b=memoryOpen[1];
+      if(memoryCards[a]===memoryCards[b]){memoryMatched.add(a);memoryMatched.add(b);memoryOpen=[];renderMemory();if(memoryMatched.size===16){const best=memoryBest();if(best===null||memoryTurns<best)save("droxion-memory-best-v2",memoryTurns);renderMemory();notify("memoryStatus","All pairs found in "+memoryTurns+" turns! Fantastic!")}}
+      else{memoryBusy=true;renderMemory();const token=memoryToken;setTimeout(()=>{if(token!==memoryToken)return;memoryOpen=[];memoryBusy=false;renderMemory()},850)}
+    }
+  }
+  $("memoryRestart").addEventListener("click",newMemory);
+
+  const panels={letter:"letterPanel",number:"numberPanel",snake:"snakePanel",groups:"groupsPanel",sudoku:"sudokuPanel",memory:"memoryPanel"};
   document.querySelectorAll("[data-game]").forEach(b=>b.addEventListener("click",()=>{
     active=b.dataset.game;
     document.querySelectorAll("[data-game]").forEach(t=>t.setAttribute("aria-selected",String(t.dataset.game===active)));
@@ -277,7 +498,7 @@
     else if(/^[a-z]$/i.test(e.key)){wordKey(e.key.toUpperCase())}
   });
   document.addEventListener("visibilitychange",()=>{if(document.hidden&&playing&&!paused)togglePause()});
-  updateStats();updateSnakeBest();displayWord();displayCode();resetSnake();
+  updateStats();updateSnakeBest();displayWord();displayCode();resetSnake();renderGroups();renderSudoku();newMemory();
 })();
 </script>
 </body>
