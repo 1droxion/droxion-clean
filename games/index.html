@@ -168,7 +168,7 @@ $("daily").addEventListener("click",()=>modeTo("daily"));$("practice").addEventL
 document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!$("overlay").hidden){close();return}if(!$("overlay").hidden||e.ctrlKey||e.metaKey||e.altKey||e.repeat)return;
 const tag=document.activeElement&&document.activeElement.tagName;if(tag==="INPUT"||tag==="TEXTAREA")return;
 if((e.key==="Enter"||e.key==="Backspace")&&!(e.key==="Enter"&&tag==="BUTTON")){e.preventDefault();type(e.key==="Enter"?"ENTER":"BACK")}
-else if(/^[a-z]$/i.test(e.key)&&tag!=="BUTTON")type(e.key.toUpperCase())});
+else if(/^[a-z]$/i.test(e.key))type(e.key.toUpperCase())});
 document.documentElement.dataset.theme=read("five-theme","light");document.documentElement.dataset.contrast=read("five-contrast",false)?"on":"off";
 $("headerDate").textContent=new Date().toLocaleDateString(undefined,{month:"short",day:"numeric",year:"numeric",timeZone:"UTC"});
 render();tick();setInterval(tick,1000);
