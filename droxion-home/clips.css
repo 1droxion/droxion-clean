@@ -1,8 +1,8 @@
-@font-face{font-family:Bebas;src:url("https://droxionclips-public.onrender.com/static/fonts/bebasneue.ttf")}
-@font-face{font-family:Montserrat;src:url("https://droxionclips-public.onrender.com/static/fonts/montserrat.ttf");font-weight:700}
-@font-face{font-family:Poppins;src:url("https://droxionclips-public.onrender.com/static/fonts/poppins.ttf");font-weight:700}
-@font-face{font-family:Oswald;src:url("https://droxionclips-public.onrender.com/static/fonts/oswald.ttf");font-weight:700}
-@font-face{font-family:Anton;src:url("https://droxionclips-public.onrender.com/static/fonts/anton.ttf")}
+@font-face{font-family:Bebas;src:url("fonts/bebasneue.ttf")}
+@font-face{font-family:Montserrat;src:url("fonts/montserrat.ttf");font-weight:700}
+@font-face{font-family:Poppins;src:url("fonts/poppins.ttf");font-weight:700}
+@font-face{font-family:Oswald;src:url("fonts/oswald.ttf");font-weight:700}
+@font-face{font-family:Anton;src:url("fonts/anton.ttf")}
 :root{color-scheme:dark;--lime:#d4ff00;--pink:#fa50dd;--muted:#c9c2ce;--panel:#151219;font:16px Arial,Helvetica,sans-serif}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
@@ -27,7 +27,7 @@ nav .home::after{content:"";position:absolute;bottom:9px;inset-inline:0;backgrou
 .cta:hover{background:#edff79;box-shadow:0 0 25px #d4ff004f}
 .cta:disabled{opacity:.65;cursor:wait}
 .menu{display:none}
-.hero{background:linear-gradient(90deg,#08070afa 1%,#08070acf 22%,transparent 61%),linear-gradient(0deg,#140c1d 0%,transparent 26%),url("https://droxionclips-public.onrender.com/static/hero.webp") center 53%/cover,#160e23}
+.hero{background:linear-gradient(90deg,#08070afa 1%,#08070acf 22%,transparent 61%),linear-gradient(0deg,#140c1d 0%,transparent 26%),url("hero.webp") center 53%/cover,#160e23}
 .hero-inner{min-height:clamp(360px,26vw,480px);display:flex;justify-content:space-between;align-items:center;gap:12px;padding:24px 12px 26px}
 .hero-copy{position:relative;z-index:1}
 .eyebrow{font-weight:600;letter-spacing:.27em;text-transform:uppercase;margin:0 0 12px;font-size:clamp(12px,1.1vw,18px)}
@@ -46,9 +46,9 @@ h1 em::after{content:"";position:absolute;inset:auto 0 -9px 0;height:5px;backgro
 .phone::after{content:"";position:absolute;top:5%;left:42%;width:16%;height:2%;border-radius:9px;background:#0b0810}
 .phone b{position:absolute;inset:auto 6% 10%;text-align:center;font:italic clamp(14px,1.75vw,30px)/.97 Anton,Impact,sans-serif;text-shadow:0 2px 4px #000}
 .phone b em{display:block}
-.phone-clutch{transform:rotate(-9deg);background-image:url("https://droxionclips-public.onrender.com/static/clutch.webp")}
-.phone-chase{width:39%;z-index:1;border-color:#dfff69;box-shadow:0 4px 22px #fa50dd87,inset 0 0 0 4px #101016;background-image:url("https://droxionclips-public.onrender.com/static/chase.webp")}
-.phone-win{transform:rotate(9deg);border-color:#e0d0b4;background-image:url("https://droxionclips-public.onrender.com/static/victory.webp")}
+.phone-clutch{transform:rotate(-9deg);background-image:url("clutch.webp")}
+.phone-chase{width:39%;z-index:1;border-color:#dfff69;box-shadow:0 4px 22px #fa50dd87,inset 0 0 0 4px #101016;background-image:url("chase.webp")}
+.phone-win{transform:rotate(9deg);border-color:#e0d0b4;background-image:url("victory.webp")}
 .content{position:relative}
 main{background:radial-gradient(ellipse 55% 25% at 0% 55%,#470440,transparent),radial-gradient(ellipse 45% 26% at 100% 55%,#470440,transparent)}
 .studio{margin-inline:3%;border:1px solid var(--lime);border-radius:25px;background:linear-gradient(140deg,#18161c,#0e0d10);padding:15px 22px;box-shadow:0 0 14px #d4ff006b,inset 0 0 12px #d4ff0011}
@@ -125,7 +125,7 @@ footer{padding-block:14px 24px}
   nav.open{display:flex}
   nav a{padding:10px}
   nav .home::after{display:none}
-  .hero{background:linear-gradient(180deg,#08070af7 0%,#08070a8a 46%,#140c1d 100%),url("https://droxionclips-public.onrender.com/static/hero.webp") 57% center/cover,#160e23}
+  .hero{background:linear-gradient(180deg,#08070af7 0%,#08070a8a 46%,#140c1d 100%),url("hero.webp") 57% center/cover,#160e23}
   .hero-inner{min-height:0;flex-direction:column;align-items:flex-start;padding:22px 3px}
   .phones{width:min(76%,315px);align-self:center;margin-top:8px}
   .phone b{font-size:clamp(14px,4.6vw,24px)}
