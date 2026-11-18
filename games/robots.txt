@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# The temporary preview is excluded by its page-level noindex tag until the custom domain is connected.
+Sitemap: https://games.droxion.com/sitemap.xml
