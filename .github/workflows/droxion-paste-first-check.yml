@@ -1,0 +1,38 @@
+name: DroxionClips paste-first homepage smoke
+on:
+  pull_request:
+    paths:
+      - 'droxion-home/**'
+      - '.github/workflows/droxion-paste-first-check.yml'
+  push:
+    branches: [codex/droxion-play-mvp]
+    paths:
+      - 'droxion-home/**'
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: JavaScript syntax
+        run: node --check droxion-home/editor.js
+      - name: Check paste-first UI and preserved FIVE link
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          h = Path('droxion-home/index.html').read_text()
+          j = Path('droxion-home/editor.js').read_text()
+          assert 'id="clipForm"' in h
+          assert 'id="sourceUrl"' in h
+          assert 'id="captionsOn"' in h
+          assert 'id="clipFont"' in h
+          assert 'id="clipCards"' in h
+          assert 'id="downloadSelected"' in h
+          assert 'https://games.droxion.com/' in h
+          assert 'https://droxionclips-editor-beta.onrender.com' in j
+          assert 'YouTube watch/live links cannot be auto-downloaded' in j
+          assert Path('droxion-home/editor.css').stat().st_size > 1500
+          print('Paste-first homepage checks passed')
+          PY
